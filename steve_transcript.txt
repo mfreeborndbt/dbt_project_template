@@ -1,0 +1,26 @@
+
+0:00: All right, so I'm starting this at like 5:55 on a Friday. 
+ 0:04: I'm sorry, I'm the worst, but, all right, Miles, you like, My brain has been like, just spinning because I'm like excited about the idea of like. 
+ 0:16: Being able to demo the repeatability of DBT. 
+ 0:22: Now, when you demo this, like however you do it, I just have like an idea that we can kind of like workshop on, but the, the story we can start with is that DBT was actually built. 
+ 0:33: For Fishtown Analytics like us as a consultancy to be able to like leverage our work as an accelerator at every client we went to, right? 
+ 0:42: Because if you do data work on like. 
+ 0:44: I don't know, some ads data here, it's probably gonna be somewhat similar there and you can kind of repeat it everywhere that you go, right? 
+ 0:51: And that's the whole reason why packages were created. 
+ 0:54: So like what I was thinking for this is like we set the stage by saying like, let's say on one of your clients, you build something you really wanted and you package it up nicely, right, and you need to go deploy that to another client tomorrow, we can say like in a parameter file which would just be like a terraform.bs file or TFRs file. 
+ 1:14: you set your parameters and we just say like, let's call the new company Acmeco, that'll be like the project, X, Y, and Z, and it can spin up a new account in like an instance, So basically, like, here's all my parameters that I set, I tell it like where the data source is, what the snowflake instance we want to connect to is, all that good stuff. 
+ 1:34: I hit deploy, it goes and it builds, it goes and it builds the DVT cloud instance, and we can show that like in a project where like only one project existed, and now we have a second project, right? 
+ 1:47: For this, we could literally like have it be in like an HTML thing we vibe coded where like you hit deploy and it like shows the steps happening in real time, and so you don't have to just show like a VS code repo, you could just say, hey Claude, create like some HTML app where I press a button and then it like reads out my terminal in like very pretty format. 
+ 2:06: So I can see it happening. 
+ 2:07: You go, you see it, it's deployed as a new project. 
+ 2:10: Obviously the project's created, it will then import a repo because that's a part of the terraform thing with the DBT package included, right? 
+ 2:17: So we can just import one of like the 5 tra packages, like, I don't know, Google Analytics per se. 
+ 2:23: and then because it imported the repo with a package, and we already told it where the sources are. 
+ 2:32: then we can just show how there's a pre-built pipeline in the ID. 
+ 2:34: So they literally clicked a button and for this new client, it automatically connected to all their, their raw data and created a, a little bit of a curated pipeline, and then we can like run that in production and show the catalog output. 
+ 2:47: so basically, like, say like, hey, you went from pressing a button and we deployed an entirely new instance of DVT platform, we automatically, had like data modeling as a service, like we, we pre-built, a pipeline for you by connecting to your services without you having to do anything, and we were able to put something in production and show it in the catalog literally within like a 2 minute span. 
+ 3:07: So, it's definitely something that's doable. 
+ 3:10: we'd have to just like figure out like, hey, how do we. 
+ 3:13: for the terraform, like how do we make it automatically connect to like a template repo, copy that template repo, in GitHub as like our new repository with the package already in it, and use that to connect to the sources. 
+ 3:26: So, it's a little bit of like a, this will be like an absolute sizzle demo if it happened, like this would be insane and like look really nicely. 
+ 3:33: We can either pare it down or up depending on how we want, but let me know what you think. 

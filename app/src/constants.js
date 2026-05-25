@@ -1,0 +1,7 @@
+export const SOURCE_OPTIONS = ['Customer Data', 'Prospect Data', 'Event Data', 'Suppression Data', 'Reference Data']
+export const IDENTITY_OPTIONS = ['Basic', 'Standard', 'Premium']
+export const CLEANSING_OPTIONS = ['Light', 'Standard', 'Strict']
+export const AUDIENCE_OPTIONS = ['Marketing Audiences', 'Analytics Audiences', 'Compliance Lists', 'Operations Views']
+export const PII_OPTIONS = ['Standard', 'Masked', 'Tokenized']
+export const WAREHOUSE_OPTIONS = ['Snowflake', 'Databricks', 'BigQuery']
+export const CLOUD_OPTIONS = ['AWS', 'Azure', 'GCP']

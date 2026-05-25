@@ -1,0 +1,759 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>dbt Pipeline Generator</title>
+    <script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.sheetjs.com/xlsx-0.20.3/package/dist/xlsx.full.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: { sans: ['Inter', 'system-ui', 'sans-serif'] },
+                    colors: {
+                        dbt: { orange: '#ff694a', dark: '#0f1117', card: '#161b22', card2: '#1c2129', border: '#30363d', muted: '#8b949e' }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        * { box-sizing: border-box; }
+        body { font-family: 'Inter', system-ui, sans-serif; background: #0a0c10; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes drawLine { from { stroke-dashoffset: 200; } to { stroke-dashoffset: 0; } }
+        .fade-in { animation: fadeIn 0.4s ease-out both; }
+        .draw-line { stroke-dasharray: 200; animation: drawLine 0.8s ease-out both; }
+        input[type="text"]::placeholder { color: #4a5568; }
+        .custom-scrollbar { scrollbar-width: thin; scrollbar-color: #30363d transparent; }
+        .custom-scrollbar::-webkit-scrollbar { width: 4px; }
+        .custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
+        .custom-scrollbar::-webkit-scrollbar-thumb { background: #30363d; border-radius: 2px; }
+    </style>
+</head>
+<body>
+<div id="root"></div>
+<script type="text/babel">
+const { useState, useCallback, useMemo, useEffect, useRef } = React;
+
+// ─── Constants ───
+const SOURCE_OPTIONS = ['Customer Data', 'Prospect Data', 'Event Data', 'Suppression Data', 'Reference Data'];
+const IDENTITY_OPTIONS = ['Basic', 'Standard', 'Premium'];
+const CLEANSING_OPTIONS = ['Light', 'Standard', 'Strict'];
+const AUDIENCE_OPTIONS = ['Marketing Audiences', 'Analytics Audiences', 'Compliance Lists', 'Operations Views'];
+const PII_OPTIONS = ['Standard', 'Masked', 'Tokenized'];
+const WAREHOUSE_OPTIONS = ['Snowflake', 'Databricks', 'BigQuery'];
+const CLOUD_OPTIONS = ['AWS', 'Azure', 'GCP'];
+
+// ─── Helpers ───
+function getTransformationStages(identity, cleansing, pii) {
+    const stages = [];
+    if (identity === 'Basic') {
+        stages.push({ id: 'id_match', label: 'Identity Match', color: '#3b82f6' });
+    } else if (identity === 'Standard') {
+        stages.push({ id: 'id_match', label: 'Identity Match', color: '#3b82f6' });
+        stages.push({ id: 'id_enrich', label: 'Profile Enrichment', color: '#6366f1' });
+        stages.push({ id: 'id_link', label: 'Household Linking', color: '#8b5cf6' });
+    } else {
+        stages.push({ id: 'id_match', label: 'Identity Match', color: '#3b82f6' });
+        stages.push({ id: 'id_graph', label: 'Identity Graph', color: '#6366f1' });
+        stages.push({ id: 'id_household', label: 'Household Resolution', color: '#8b5cf6' });
+        stages.push({ id: 'id_address', label: 'Address Resolution', color: '#a78bfa' });
+        stages.push({ id: 'id_enrich', label: 'Full Enrichment', color: '#c084fc' });
+    }
+    const cleanseColors = { Light: '#22c55e', Standard: '#eab308', Strict: '#ef4444' };
+    stages.push({ id: 'cleanse', label: `${cleansing} Cleansing`, color: cleanseColors[cleansing] });
+    const piiColors = { Standard: '#06b6d4', Masked: '#f97316', Tokenized: '#ec4899' };
+    stages.push({ id: 'pii', label: `PII ${pii}`, color: piiColors[pii] });
+    return stages;
+}
+
+function getStats(sources, stages, audiences) {
+    const srcCount = sources.length;
+    const stageCount = stages.length;
+    const audCount = audiences.length;
+    const tables = srcCount * 2 + stageCount + audCount * 2;
+    const transforms = stageCount + Math.max(1, srcCount - 1) + audCount;
+    return { tables, transforms, marts: audCount };
+}
+
+function getSampleSQL(cleansing, pii, warehouse) {
+    const dbPrefix = warehouse === 'BigQuery' ? '`project.dataset.' : '';
+    const dbSuffix = warehouse === 'BigQuery' ? '`' : '';
+    if (cleansing === 'Light' && pii === 'Standard') {
+        return `select
+    customer_id,
+    email,
+    first_name,
+    last_name,
+    phone
+from {{ ref('stg_customers') }}
+where email is not null`;
+    }
+    if (cleansing === 'Strict' && pii === 'Tokenized') {
+        return `select
+    {{ dbt_utils.generate_surrogate_key(['customer_id']) }}
+        as token_id,
+    {{ pii_tokenize('email') }} as email_token,
+    upper(trim(first_name)) as first_name,
+    {{ validate_phone('phone') }} as phone,
+    {{ address_standardize('address') }} as address
+from {{ ref('stg_customers') }}
+where {{ is_valid_record('customer_id', 'email') }}`;
+    }
+    if (pii === 'Tokenized') {
+        return `select
+    {{ dbt_utils.generate_surrogate_key(['customer_id']) }}
+        as token_id,
+    {{ pii_tokenize('email') }} as email_token,
+    trim(first_name) as first_name,
+    phone
+from {{ ref('stg_customers') }}
+where email is not null`;
+    }
+    if (pii === 'Masked') {
+        return `select
+    customer_id,
+    {{ pii_mask('email', 3) }} as email_masked,
+    first_name,
+    {{ pii_mask('phone', 4) }} as phone_masked
+from {{ ref('stg_customers') }}
+where email is not null`;
+    }
+    if (cleansing === 'Strict') {
+        return `select
+    customer_id,
+    lower(trim(email)) as email,
+    upper(trim(first_name)) as first_name,
+    {{ validate_phone('phone') }} as phone,
+    {{ address_standardize('address') }} as address
+from {{ ref('stg_customers') }}
+where {{ is_valid_record('customer_id', 'email') }}`;
+    }
+    return `select
+    customer_id,
+    lower(trim(email)) as email,
+    trim(first_name) as first_name,
+    last_name,
+    phone
+from {{ ref('stg_customers') }}
+where email is not null`;
+}
+
+// ─── Pipeline SVG ───
+function PipelineDiagram({ sources, stages, audiences }) {
+    const padding = 20;
+    const headerH = 24;
+    const nodeW = 140;
+    const nodeH = 34;
+    const nodeGapY = 12;
+    const colGap = 40;
+
+    // Split stages into two columns
+    const midIdx = Math.ceil(stages.length / 2);
+    const col1Stages = stages.slice(0, midIdx);
+    const col2Stages = stages.slice(midIdx);
+    const hasTwoCols = col2Stages.length > 0;
+
+    const numCols = hasTwoCols ? 4 : 3;
+    const svgWidth = padding * 2 + numCols * nodeW + (numCols - 1) * colGap;
+
+    // Compute column x positions
+    const colX = [];
+    for (let i = 0; i < numCols; i++) {
+        colX.push(padding + i * (nodeW + colGap));
+    }
+
+    // Compute max vertical extent
+    const maxNodes = Math.max(sources.length, col1Stages.length, col2Stages.length || 0, audiences.length);
+    const contentH = maxNodes * (nodeH + nodeGapY) - nodeGapY;
+    const svgHeight = padding * 2 + headerH + contentH + 10;
+
+    function layoutCol(items, x) {
+        const totalH = items.length * (nodeH + nodeGapY) - nodeGapY;
+        const startY = padding + headerH + (contentH - totalH) / 2;
+        return items.map((item, i) => ({
+            ...item,
+            x,
+            y: startY + i * (nodeH + nodeGapY),
+        }));
+    }
+
+    const srcNodes = layoutCol(
+        sources.map((s, i) => ({ id: `src_${i}`, label: s.replace(' Data', ''), color: '#ff694a' })),
+        colX[0]
+    );
+    const col1Nodes = layoutCol(col1Stages, colX[1]);
+    const col2Nodes = hasTwoCols ? layoutCol(col2Stages, colX[2]) : [];
+    const audNodes = layoutCol(
+        audiences.map((a, i) => ({ id: `aud_${i}`, label: a.replace(' Audiences', '').replace(' Lists', '').replace(' Views', ''), color: '#22c55e' })),
+        colX[numCols - 1]
+    );
+
+    // Edges
+    const edges = [];
+    srcNodes.forEach(src => {
+        col1Nodes.forEach(st => {
+            edges.push({ x1: src.x + nodeW, y1: src.y + nodeH / 2, x2: st.x, y2: st.y + nodeH / 2 });
+        });
+    });
+    if (hasTwoCols) {
+        col1Nodes.forEach(st1 => {
+            col2Nodes.forEach(st2 => {
+                edges.push({ x1: st1.x + nodeW, y1: st1.y + nodeH / 2, x2: st2.x, y2: st2.y + nodeH / 2 });
+            });
+        });
+    }
+    const lastCol = hasTwoCols ? col2Nodes : col1Nodes;
+    lastCol.forEach(st => {
+        audNodes.forEach(aud => {
+            edges.push({ x1: st.x + nodeW, y1: st.y + nodeH / 2, x2: aud.x, y2: aud.y + nodeH / 2 });
+        });
+    });
+
+    const renderNode = (node, delay) => (
+        <g key={node.id} className="fade-in" style={{ animationDelay: `${delay}ms` }}>
+            <rect x={node.x} y={node.y} width={nodeW} height={nodeH} rx={8}
+                fill={node.color + '18'} stroke={node.color} strokeWidth={1.5} />
+            <text x={node.x + nodeW / 2} y={node.y + nodeH / 2 + 1}
+                textAnchor="middle" dominantBaseline="middle"
+                fill={node.color} fontSize={11} fontWeight={500} fontFamily="Inter, sans-serif">
+                {node.label.length > 16 ? node.label.slice(0, 14) + '...' : node.label}
+            </text>
+        </g>
+    );
+
+    // Column header labels
+    const headers = [
+        { x: colX[0] + nodeW / 2, label: 'Sources' },
+        { x: colX[1] + nodeW / 2, label: 'Resolution' },
+    ];
+    if (hasTwoCols) {
+        headers.push({ x: colX[2] + nodeW / 2, label: 'Processing' });
+    }
+    headers.push({ x: colX[numCols - 1] + nodeW / 2, label: 'Marts' });
+
+    return (
+        <svg width="100%" viewBox={`0 0 ${svgWidth} ${svgHeight}`} style={{ overflow: 'hidden', display: 'block' }}>
+            <defs>
+                <marker id="arrow" viewBox="0 0 10 7" refX="10" refY="3.5"
+                    markerWidth={6} markerHeight={5} orient="auto-start-reverse">
+                    <path d="M 0 0 L 10 3.5 L 0 7 z" fill="#30363d" />
+                </marker>
+            </defs>
+
+            {/* Column headers */}
+            {headers.map(h => (
+                <text key={h.label} x={h.x} y={padding + 10} textAnchor="middle"
+                    fill="#8b949e" fontSize={10} fontWeight={600} fontFamily="Inter, sans-serif"
+                    style={{ textTransform: 'uppercase', letterSpacing: '0.05em' }}>{h.label}</text>
+            ))}
+
+            {/* Edges */}
+            {edges.map((e, i) => {
+                const midX = (e.x1 + e.x2) / 2;
+                return (
+                    <path key={`edge_${i}`}
+                        d={`M ${e.x1} ${e.y1} C ${midX} ${e.y1}, ${midX} ${e.y2}, ${e.x2} ${e.y2}`}
+                        fill="none" stroke="#30363d" strokeWidth={1}
+                        className="draw-line"
+                        style={{ animationDelay: `${200 + i * 30}ms` }}
+                        markerEnd="url(#arrow)" />
+                );
+            })}
+
+            {/* Nodes */}
+            {srcNodes.map((n, i) => renderNode(n, i * 60))}
+            {col1Nodes.map((n, i) => renderNode(n, 150 + i * 60))}
+            {col2Nodes.map((n, i) => renderNode(n, 300 + i * 60))}
+            {audNodes.map((n, i) => renderNode(n, 400 + i * 60))}
+        </svg>
+    );
+}
+
+// ─── Chip Select ───
+function ChipSelect({ options, selected, onChange, label }) {
+    const toggle = (opt) => {
+        if (selected.includes(opt)) {
+            if (selected.length > 1) onChange(selected.filter(s => s !== opt));
+        } else {
+            onChange([...selected, opt]);
+        }
+    };
+    return (
+        <div className="mb-5">
+            <label className="block text-xs font-medium text-dbt-muted mb-2 uppercase tracking-wider">{label}</label>
+            <div className="flex flex-wrap gap-2">
+                {options.map(opt => {
+                    const active = selected.includes(opt);
+                    return (
+                        <button key={opt} onClick={() => toggle(opt)}
+                            className={`px-3 py-1.5 rounded-full text-xs font-medium transition-all duration-200 border ${
+                                active
+                                    ? 'bg-dbt-orange/15 border-dbt-orange text-dbt-orange'
+                                    : 'bg-transparent border-dbt-border text-dbt-muted hover:border-dbt-muted'
+                            }`}>
+                            {opt}
+                        </button>
+                    );
+                })}
+            </div>
+        </div>
+    );
+}
+
+// ─── Radio Select ───
+function RadioSelect({ options, selected, onChange, label }) {
+    return (
+        <div className="mb-5">
+            <label className="block text-xs font-medium text-dbt-muted mb-2 uppercase tracking-wider">{label}</label>
+            <div className="flex gap-2">
+                {options.map(opt => {
+                    const active = selected === opt;
+                    return (
+                        <button key={opt} onClick={() => onChange(opt)}
+                            className={`px-3 py-1.5 rounded-full text-xs font-medium transition-all duration-200 border ${
+                                active
+                                    ? 'bg-dbt-orange/15 border-dbt-orange text-dbt-orange'
+                                    : 'bg-transparent border-dbt-border text-dbt-muted hover:border-dbt-muted'
+                            }`}>
+                            {opt}
+                        </button>
+                    );
+                })}
+            </div>
+        </div>
+    );
+}
+
+// ─── Text Input ───
+function TextInput({ label, value, onChange, placeholder, mono }) {
+    return (
+        <div className="mb-4">
+            <label className="block text-xs font-medium text-dbt-muted mb-1.5 uppercase tracking-wider">{label}</label>
+            <input type="text" value={value} onChange={e => onChange(e.target.value)}
+                placeholder={placeholder}
+                className={`w-full px-3 py-2 bg-[#0d1117] border border-dbt-border rounded-lg text-sm text-gray-200 focus:outline-none focus:border-dbt-orange transition-colors ${mono ? 'font-mono text-xs' : ''}`} />
+        </div>
+    );
+}
+
+// ─── Warehouse Icon ───
+function WarehouseIcon({ type }) {
+    if (type === 'Snowflake') return (
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#29b5e8" strokeWidth="2" strokeLinecap="round">
+            <line x1="12" y1="2" x2="12" y2="22"/><line x1="2" y1="12" x2="22" y2="12"/>
+            <line x1="4.93" y1="4.93" x2="19.07" y2="19.07"/><line x1="19.07" y1="4.93" x2="4.93" y2="19.07"/>
+        </svg>
+    );
+    if (type === 'Databricks') return (
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#ff3621" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <polygon points="12 2 22 8.5 22 15.5 12 22 2 15.5 2 8.5 12 2"/>
+            <line x1="12" y1="22" x2="12" y2="15.5"/><line x1="22" y1="8.5" x2="12" y2="15.5"/><line x1="2" y1="8.5" x2="12" y2="15.5"/>
+        </svg>
+    );
+    return (
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#4285f4" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/>
+        </svg>
+    );
+}
+
+// ─── Cloud Icon ───
+function CloudIcon({ type }) {
+    const color = type === 'AWS' ? '#ff9900' : type === 'Azure' ? '#0078d4' : '#4285f4';
+    return (
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <path d="M18 10h-1.26A8 8 0 1 0 9 20h9a5 5 0 0 0 0-10z"/>
+        </svg>
+    );
+}
+
+// ─── Collapsible Section ───
+function Section({ title, children, defaultOpen, icon }) {
+    const [open, setOpen] = useState(defaultOpen !== false);
+    return (
+        <div className="mb-4">
+            <button onClick={() => setOpen(!open)}
+                className="flex items-center justify-between w-full text-left mb-3 group">
+                <div className="flex items-center gap-2">
+                    {icon}
+                    <span className="text-sm font-semibold text-white">{title}</span>
+                </div>
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#8b949e" strokeWidth="2"
+                    strokeLinecap="round" strokeLinejoin="round"
+                    className={`transition-transform duration-200 ${open ? 'rotate-90' : ''}`}>
+                    <polyline points="9 18 15 12 9 6"/>
+                </svg>
+            </button>
+            {open && <div className="space-y-0">{children}</div>}
+        </div>
+    );
+}
+
+// ─── Main App ───
+function App() {
+    // Pipeline params
+    const [sources, setSources] = useState(['Customer Data', 'Prospect Data']);
+    const [identity, setIdentity] = useState('Standard');
+    const [cleansing, setCleansing] = useState('Standard');
+    const [audiences, setAudiences] = useState(['Marketing Audiences', 'Analytics Audiences']);
+    const [pii, setPii] = useState('Standard');
+
+    // Infrastructure params
+    const [warehouse, setWarehouse] = useState('Snowflake');
+    const [cloud, setCloud] = useState('AWS');
+    const [dbtAccountId, setDbtAccountId] = useState('');
+    const [dbtAccessUrl, setDbtAccessUrl] = useState('cloud.getdbt.com');
+    const [dbtApiToken, setDbtApiToken] = useState('');
+    const [gitRepo, setGitRepo] = useState('');
+    const [gitOrg, setGitOrg] = useState('');
+    const [gitToken, setGitToken] = useState('');
+    const [projectName, setProjectName] = useState('acxiom_client_pipeline');
+
+    // Warehouse-specific
+    const [sfAccount, setSfAccount] = useState('');
+    const [sfWarehouse, setSfWarehouse] = useState('');
+    const [sfUser, setSfUser] = useState('');
+    const [sfDatabase, setSfDatabase] = useState('');
+    const [dbxWorkspaceUrl, setDbxWorkspaceUrl] = useState('');
+    const [dbxHttpPath, setDbxHttpPath] = useState('');
+    const [bqProject, setBqProject] = useState('');
+    const [bqLocation, setBqLocation] = useState('US');
+
+    const [uploadName, setUploadName] = useState(null);
+    const fileInputRef = useRef(null);
+    const [animKey, setAnimKey] = useState(0);
+
+    useEffect(() => {
+        setAnimKey(k => k + 1);
+    }, [sources.join(','), identity, cleansing, audiences.join(','), pii]);
+
+    const stages = useMemo(() => getTransformationStages(identity, cleansing, pii), [identity, cleansing, pii]);
+    const stats = useMemo(() => getStats(sources, stages, audiences), [sources, stages, audiences]);
+    const sampleSQL = useMemo(() => getSampleSQL(cleansing, pii, warehouse), [cleansing, pii, warehouse]);
+
+    const handleFileUpload = useCallback((e) => {
+        const file = e.target.files?.[0];
+        if (!file) return;
+        setUploadName(file.name);
+        const reader = new FileReader();
+        reader.onload = (evt) => {
+            try {
+                const wb = XLSX.read(evt.target.result, { type: 'array' });
+                const ws = wb.Sheets[wb.SheetNames[0]];
+                const data = XLSX.utils.sheet_to_json(ws);
+
+                data.forEach(row => {
+                    const param = (row.Parameter || row.parameter || '').trim().toLowerCase();
+                    const value = (row.Value || row.value || '').trim();
+
+                    if (param.includes('source')) {
+                        const vals = value.split(',').map(v => v.trim()).filter(v =>
+                            SOURCE_OPTIONS.some(o => o.toLowerCase() === v.toLowerCase())
+                        );
+                        const matched = vals.map(v => SOURCE_OPTIONS.find(o => o.toLowerCase() === v.toLowerCase()));
+                        if (matched.length > 0) setSources(matched);
+                    }
+                    if (param.includes('identity')) {
+                        const match = IDENTITY_OPTIONS.find(o => o.toLowerCase() === value.toLowerCase());
+                        if (match) setIdentity(match);
+                    }
+                    if (param.includes('cleans')) {
+                        const match = CLEANSING_OPTIONS.find(o => o.toLowerCase() === value.toLowerCase());
+                        if (match) setCleansing(match);
+                    }
+                    if (param.includes('audience') || param.includes('output')) {
+                        const vals = value.split(',').map(v => v.trim()).filter(v =>
+                            AUDIENCE_OPTIONS.some(o => o.toLowerCase() === v.toLowerCase())
+                        );
+                        const matched = vals.map(v => AUDIENCE_OPTIONS.find(o => o.toLowerCase() === v.toLowerCase()));
+                        if (matched.length > 0) setAudiences(matched);
+                    }
+                    if (param.includes('pii')) {
+                        const match = PII_OPTIONS.find(o => o.toLowerCase() === value.toLowerCase());
+                        if (match) setPii(match);
+                    }
+                    if (param.includes('warehouse') || param.includes('target')) {
+                        const match = WAREHOUSE_OPTIONS.find(o => o.toLowerCase() === value.toLowerCase());
+                        if (match) setWarehouse(match);
+                    }
+                    if (param.includes('cloud')) {
+                        const match = CLOUD_OPTIONS.find(o => o.toLowerCase() === value.toLowerCase());
+                        if (match) setCloud(match);
+                    }
+                    if (param.includes('project') && param.includes('name')) setProjectName(value);
+                    if (param.includes('account') && param.includes('id')) setDbtAccountId(value);
+                    if (param.includes('git') && param.includes('repo')) setGitRepo(value);
+                    if (param.includes('git') && param.includes('org')) setGitOrg(value);
+                });
+            } catch (err) {
+                console.error('File parse error:', err);
+            }
+        };
+        reader.readAsArrayBuffer(file);
+    }, []);
+
+    // Warehouse-specific fields
+    const warehouseFields = warehouse === 'Snowflake' ? (
+        <>
+            <div className="grid grid-cols-2 gap-3">
+                <TextInput label="Account" value={sfAccount} onChange={setSfAccount} placeholder="xy12345.us-east-1" mono />
+                <TextInput label="Warehouse" value={sfWarehouse} onChange={setSfWarehouse} placeholder="TRANSFORM_WH" mono />
+            </div>
+            <div className="grid grid-cols-2 gap-3">
+                <TextInput label="User" value={sfUser} onChange={setSfUser} placeholder="DBT_USER" mono />
+                <TextInput label="Database" value={sfDatabase} onChange={setSfDatabase} placeholder="ANALYTICS" mono />
+            </div>
+        </>
+    ) : warehouse === 'Databricks' ? (
+        <>
+            <TextInput label="Workspace URL" value={dbxWorkspaceUrl} onChange={setDbxWorkspaceUrl} placeholder="adb-1234567890.1.azuredatabricks.net" mono />
+            <TextInput label="HTTP Path" value={dbxHttpPath} onChange={setDbxHttpPath} placeholder="/sql/1.0/warehouses/abc123" mono />
+        </>
+    ) : (
+        <>
+            <div className="grid grid-cols-2 gap-3">
+                <TextInput label="GCP Project" value={bqProject} onChange={setBqProject} placeholder="my-gcp-project" mono />
+                <TextInput label="Location" value={bqLocation} onChange={setBqLocation} placeholder="US" mono />
+            </div>
+        </>
+    );
+
+    return (
+        <div className="min-h-screen bg-[#0a0c10] text-gray-200">
+            {/* Header */}
+            <header className="border-b border-dbt-border/50 bg-[#0d0f14]">
+                <div className="max-w-[1600px] mx-auto px-6 py-4 flex items-center justify-between">
+                    <div className="flex items-center gap-3">
+                        <svg width="28" height="28" viewBox="0 0 100 100">
+                            <rect x="15" y="15" width="70" height="70" rx="12" fill="#ff694a" transform="rotate(45 50 50)"/>
+                            <text x="50" y="62" textAnchor="middle" fontSize="40" fontWeight="bold" fill="white" fontFamily="sans-serif">d</text>
+                        </svg>
+                        <div>
+                            <h1 className="text-lg font-semibold text-white">dbt Pipeline Generator</h1>
+                            <p className="text-[11px] text-dbt-muted">Configure parameters to generate a custom data pipeline</p>
+                        </div>
+                    </div>
+                    <button onClick={() => fileInputRef.current?.click()}
+                        className="flex items-center gap-2 px-4 py-2 rounded-lg border border-dbt-border text-sm text-dbt-muted hover:text-white hover:border-dbt-muted transition-colors">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/>
+                        </svg>
+                        {uploadName ? uploadName : 'Upload Intake Form'}
+                    </button>
+                    <input ref={fileInputRef} type="file" accept=".xlsx,.xls,.csv" className="hidden" onChange={handleFileUpload} />
+                </div>
+            </header>
+
+            {/* Main Content */}
+            <div className="max-w-[1600px] mx-auto flex" style={{ minHeight: 'calc(100vh - 65px)' }}>
+                {/* Left Panel */}
+                <div className="w-[35%] min-w-[360px] border-r border-dbt-border/50 p-6 overflow-y-auto custom-scrollbar" style={{ maxHeight: 'calc(100vh - 65px)' }}>
+
+                    {/* Infrastructure */}
+                    <Section title="Infrastructure" icon={
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#8b949e" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                            <rect x="2" y="2" width="20" height="8" rx="2" ry="2"/><rect x="2" y="14" width="20" height="8" rx="2" ry="2"/>
+                            <line x1="6" y1="6" x2="6.01" y2="6"/><line x1="6" y1="18" x2="6.01" y2="18"/>
+                        </svg>
+                    }>
+                        <TextInput label="Project Name" value={projectName} onChange={setProjectName} placeholder="acxiom_client_pipeline" mono />
+
+                        <div className="mb-5">
+                            <label className="block text-xs font-medium text-dbt-muted mb-2 uppercase tracking-wider">Data Platform</label>
+                            <div className="flex gap-2">
+                                {WAREHOUSE_OPTIONS.map(opt => {
+                                    const active = warehouse === opt;
+                                    const colors = { Snowflake: '#29b5e8', Databricks: '#ff3621', BigQuery: '#4285f4' };
+                                    return (
+                                        <button key={opt} onClick={() => setWarehouse(opt)}
+                                            className={`flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-medium transition-all duration-200 border ${
+                                                active
+                                                    ? `border-[${colors[opt]}] text-[${colors[opt]}]`
+                                                    : 'bg-transparent border-dbt-border text-dbt-muted hover:border-dbt-muted'
+                                            }`}
+                                            style={active ? { borderColor: colors[opt], color: colors[opt], backgroundColor: colors[opt] + '15' } : {}}>
+                                            <WarehouseIcon type={opt} />
+                                            {opt}
+                                        </button>
+                                    );
+                                })}
+                            </div>
+                        </div>
+
+                        <div className="mb-5">
+                            <label className="block text-xs font-medium text-dbt-muted mb-2 uppercase tracking-wider">Cloud Provider</label>
+                            <div className="flex gap-2">
+                                {CLOUD_OPTIONS.map(opt => {
+                                    const active = cloud === opt;
+                                    const colors = { AWS: '#ff9900', Azure: '#0078d4', GCP: '#4285f4' };
+                                    return (
+                                        <button key={opt} onClick={() => setCloud(opt)}
+                                            className={`flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-medium transition-all duration-200 border`}
+                                            style={active ? { borderColor: colors[opt], color: colors[opt], backgroundColor: colors[opt] + '15' } : {}}>
+                                            <CloudIcon type={opt} />
+                                            {opt}
+                                        </button>
+                                    );
+                                })}
+                            </div>
+                        </div>
+
+                        {warehouseFields}
+                    </Section>
+
+                    <div className="border-t border-dbt-border/50 my-4" />
+
+                    {/* dbt Account */}
+                    <Section title="dbt Account" icon={
+                        <svg width="14" height="14" viewBox="0 0 100 100">
+                            <rect x="15" y="15" width="70" height="70" rx="12" fill="#ff694a" transform="rotate(45 50 50)"/>
+                            <text x="50" y="62" textAnchor="middle" fontSize="40" fontWeight="bold" fill="white" fontFamily="sans-serif">d</text>
+                        </svg>
+                    }>
+                        <TextInput label="Account ID" value={dbtAccountId} onChange={setDbtAccountId} placeholder="12345" mono />
+                        <TextInput label="Access URL" value={dbtAccessUrl} onChange={setDbtAccessUrl} placeholder="cloud.getdbt.com" mono />
+                        <TextInput label="API Token" value={dbtApiToken} onChange={setDbtApiToken} placeholder="dbtc_••••••••••" mono />
+                    </Section>
+
+                    <div className="border-t border-dbt-border/50 my-4" />
+
+                    {/* Git */}
+                    <Section title="Git Repository" icon={
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#8b949e" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                            <circle cx="12" cy="18" r="3"/><circle cx="6" cy="6" r="3"/><circle cx="18" cy="6" r="3"/>
+                            <path d="M18 9v1a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2V9"/><line x1="12" y1="12" x2="12" y2="15"/>
+                        </svg>
+                    }>
+                        <TextInput label="GitHub Organization" value={gitOrg} onChange={setGitOrg} placeholder="acxiom-data" mono />
+                        <TextInput label="Repository Name" value={gitRepo} onChange={setGitRepo} placeholder="acxiom-client-pipeline" mono />
+                        <TextInput label="GitHub Token" value={gitToken} onChange={setGitToken} placeholder="ghp_••••••••••" mono />
+                    </Section>
+
+                    <div className="border-t border-dbt-border/50 my-4" />
+
+                    {/* Pipeline Params */}
+                    <Section title="Pipeline Parameters" icon={
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#8b949e" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                            <line x1="4" y1="21" x2="4" y2="14"/><line x1="4" y1="10" x2="4" y2="3"/>
+                            <line x1="12" y1="21" x2="12" y2="12"/><line x1="12" y1="8" x2="12" y2="3"/>
+                            <line x1="20" y1="21" x2="20" y2="16"/><line x1="20" y1="12" x2="20" y2="3"/>
+                            <line x1="1" y1="14" x2="7" y2="14"/><line x1="9" y1="8" x2="15" y2="8"/><line x1="17" y1="16" x2="23" y2="16"/>
+                        </svg>
+                    }>
+                        <ChipSelect label="Source Types" options={SOURCE_OPTIONS} selected={sources} onChange={setSources} />
+                        <RadioSelect label="Identity Resolution" options={IDENTITY_OPTIONS} selected={identity} onChange={setIdentity} />
+                        <RadioSelect label="Data Cleansing" options={CLEANSING_OPTIONS} selected={cleansing} onChange={setCleansing} />
+                        <ChipSelect label="Audience Outputs" options={AUDIENCE_OPTIONS} selected={audiences} onChange={setAudiences} />
+                        <RadioSelect label="PII Treatment" options={PII_OPTIONS} selected={pii} onChange={setPii} />
+                    </Section>
+
+                    {/* Config Summary Table */}
+                    <div className="border-t border-dbt-border/50 pt-4 mt-2">
+                        <h3 className="text-xs font-semibold text-dbt-muted mb-3 uppercase tracking-wider">Current Configuration</h3>
+                        <table className="w-full text-xs">
+                            <thead>
+                                <tr className="border-b border-dbt-border/50">
+                                    <th className="text-left py-2 text-dbt-muted font-medium">Parameter</th>
+                                    <th className="text-left py-2 text-dbt-muted font-medium">Value</th>
+                                </tr>
+                            </thead>
+                            <tbody className="text-gray-300">
+                                <tr className="border-b border-dbt-border/30"><td className="py-1.5">Project</td><td className="py-1.5 font-mono">{projectName || '—'}</td></tr>
+                                <tr className="border-b border-dbt-border/30"><td className="py-1.5">Platform</td><td className="py-1.5">{warehouse} on {cloud}</td></tr>
+                                <tr className="border-b border-dbt-border/30"><td className="py-1.5">dbt Account</td><td className="py-1.5 font-mono">{dbtAccountId || '—'}</td></tr>
+                                <tr className="border-b border-dbt-border/30"><td className="py-1.5">Git Repo</td><td className="py-1.5 font-mono">{gitOrg && gitRepo ? `${gitOrg}/${gitRepo}` : '—'}</td></tr>
+                                <tr className="border-b border-dbt-border/30"><td className="py-1.5">Sources</td><td className="py-1.5">{sources.join(', ')}</td></tr>
+                                <tr className="border-b border-dbt-border/30"><td className="py-1.5">Identity</td><td className="py-1.5">{identity}</td></tr>
+                                <tr className="border-b border-dbt-border/30"><td className="py-1.5">Cleansing</td><td className="py-1.5">{cleansing}</td></tr>
+                                <tr className="border-b border-dbt-border/30"><td className="py-1.5">Audiences</td><td className="py-1.5">{audiences.join(', ')}</td></tr>
+                                <tr><td className="py-1.5">PII Treatment</td><td className="py-1.5">{pii}</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                {/* Right Panel — Pipeline */}
+                <div className="flex-1 p-6 overflow-y-auto custom-scrollbar" style={{ maxHeight: 'calc(100vh - 65px)' }}>
+                    <div className="flex items-center justify-between mb-6">
+                        <h2 className="text-sm font-semibold text-white">Generated Pipeline</h2>
+                        <div className="flex gap-6">
+                            <div className="text-center">
+                                <div className="text-xl font-bold text-white">{stats.tables}</div>
+                                <div className="text-[10px] text-dbt-muted uppercase tracking-wider">Tables</div>
+                            </div>
+                            <div className="text-center">
+                                <div className="text-xl font-bold text-white">{stats.transforms}</div>
+                                <div className="text-[10px] text-dbt-muted uppercase tracking-wider">Transforms</div>
+                            </div>
+                            <div className="text-center">
+                                <div className="text-xl font-bold text-white">{stats.marts}</div>
+                                <div className="text-[10px] text-dbt-muted uppercase tracking-wider">Marts</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    {/* Infrastructure badge row */}
+                    <div className="flex items-center gap-3 mb-4">
+                        <span className="flex items-center gap-1.5 px-3 py-1 rounded-full text-[10px] font-medium border border-dbt-border text-dbt-muted bg-dbt-card">
+                            <WarehouseIcon type={warehouse} /> {warehouse}
+                        </span>
+                        <span className="flex items-center gap-1.5 px-3 py-1 rounded-full text-[10px] font-medium border border-dbt-border text-dbt-muted bg-dbt-card">
+                            <CloudIcon type={cloud} /> {cloud}
+                        </span>
+                        {projectName && (
+                            <span className="px-3 py-1 rounded-full text-[10px] font-mono font-medium border border-dbt-border text-dbt-muted bg-dbt-card">
+                                {projectName}
+                            </span>
+                        )}
+                        {gitOrg && gitRepo && (
+                            <span className="flex items-center gap-1.5 px-3 py-1 rounded-full text-[10px] font-mono font-medium border border-dbt-border text-dbt-muted bg-dbt-card">
+                                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#8b949e" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                                    <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/>
+                                </svg>
+                                {gitOrg}/{gitRepo}
+                            </span>
+                        )}
+                    </div>
+
+                    {/* Pipeline Diagram — clipped */}
+                    <div key={animKey} className="bg-dbt-card border border-dbt-border rounded-xl p-4 mb-6 overflow-hidden">
+                        <PipelineDiagram sources={sources} stages={stages} audiences={audiences} />
+                    </div>
+
+                    {/* Sample Transformation */}
+                    <div className="bg-dbt-card border border-dbt-border rounded-xl p-4">
+                        <div className="flex items-center justify-between mb-3">
+                            <h3 className="text-xs font-semibold text-dbt-muted uppercase tracking-wider">Sample Transformation</h3>
+                            <span className="text-[10px] text-dbt-muted px-2 py-0.5 rounded bg-dbt-border/50">
+                                {cleansing} cleansing &middot; {pii} PII &middot; {warehouse}
+                            </span>
+                        </div>
+                        <pre className="text-xs leading-relaxed text-gray-300 font-mono bg-[#0d1117] rounded-lg p-4 overflow-x-auto">
+                            <code>{sampleSQL}</code>
+                        </pre>
+                    </div>
+
+                    {/* Deploy Button */}
+                    <button className="w-full mt-6 py-3 bg-dbt-orange text-white font-semibold rounded-xl text-sm hover:bg-[#e55a3a] transition-colors flex items-center justify-center gap-2">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                            <path d="M22 2L11 13"/><path d="M22 2l-7 20-4-9-9-4 20-7z"/>
+                        </svg>
+                        Deploy Pipeline
+                    </button>
+                </div>
+            </div>
+        </div>
+    );
+}
+
+ReactDOM.createRoot(document.getElementById('root')).render(<App />);
+</script>
+</body>
+</html>
