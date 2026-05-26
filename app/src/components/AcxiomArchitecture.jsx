@@ -1,14 +1,14 @@
 import { useState } from 'react'
-import { WarehouseIcon, CloudIcon, DbtLogo } from './Icons'
+import { WarehouseIcon, CloudIcon, DbtLogo, DagsterLogo } from './Icons'
 
 export default function AcxiomArchitecture() {
   const [hoveredSection, setHoveredSection] = useState(null)
 
   const layers = [
-    { label: 'Layer 1', name: 'Ingestion' },
+    { label: 'Layer 1', name: 'Ingestion', hasDagster: true },
     { label: 'Layer 2', name: 'Curated' },
     { label: 'Layer 3', name: 'Gold' },
-    { label: 'Layer 4', name: 'Consumption' },
+    { label: 'Layer 4', name: 'Consumption', hasDagster: true },
   ]
 
   return (
@@ -42,6 +42,7 @@ export default function AcxiomArchitecture() {
                       {l.name}
                       <span className="flex items-center gap-0.5">
                         <DbtLogo size={12} />
+                        {l.hasDagster && <DagsterLogo size={12} />}
                       </span>
                     </span>
                   </div>

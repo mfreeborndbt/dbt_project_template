@@ -27,6 +27,15 @@ export function CloudIcon({ type }) {
   )
 }
 
+export function DagsterLogo({ size = 12 }) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="none">
+      <polygon points="12,2 22,7 22,17 12,22 2,17 2,7" fill="none" stroke="#4f46e5" strokeWidth="2" strokeLinejoin="round"/>
+      <circle cx="12" cy="12" r="4" fill="#4f46e5"/>
+    </svg>
+  )
+}
+
 export function DbtLogo({ size = 28 }) {
   return (
     <svg width={size} height={size} viewBox="0 0 100 100">

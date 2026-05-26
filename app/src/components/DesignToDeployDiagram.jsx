@@ -21,7 +21,7 @@ const steps = [
   {
     icon: Server,
     label: 'Data platform connected',
-    description: 'Snowflake connection and credentials configured',
+    description: 'Data platform connection and credentials configured',
     color: '#29b5e8',
     bgColor: 'rgba(41, 181, 232, 0.1)',
     borderColor: 'rgba(41, 181, 232, 0.3)',
@@ -109,23 +109,6 @@ export default function DesignToDeployDiagram() {
           })}
         </div>
 
-        {/* Bottom summary */}
-        <div className="mt-8 border-t border-dbt-border pt-4">
-          <div className="flex items-center justify-center gap-8 text-[10px] text-gray-500 uppercase tracking-wider">
-            <span className="flex items-center gap-1.5">
-              <div className="w-2 h-2 rounded-full bg-dbt-orange" />
-              Automated
-            </span>
-            <span className="flex items-center gap-1.5">
-              <div className="w-2 h-2 rounded-full bg-green-500" />
-              Production-ready
-            </span>
-            <span className="flex items-center gap-1.5">
-              <div className="w-2 h-2 rounded-full bg-violet-500" />
-              Version-controlled
-            </span>
-          </div>
-        </div>
       </div>
     </div>
   )
