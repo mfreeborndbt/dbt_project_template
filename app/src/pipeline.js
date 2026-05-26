@@ -21,12 +21,12 @@ export function getTransformationStages(identity, cleansing, pii) {
 }
 
 export function getStats(sources, stages, audiences) {
-  const srcCount = sources.length
-  const stageCount = stages.length
-  const audCount = audiences.length
-  const tables = srcCount * 2 + stageCount + audCount * 2
-  const transforms = stageCount + Math.max(1, srcCount - 1) + audCount
-  return { tables, transforms, marts: audCount }
+  const staging = sources.length        // 1 staging model per source
+  const intermediate = 3                // identity resolution, events agg, suppression check
+  const marts = audiences.length        // 1 mart per audience output
+  const models = staging + intermediate + marts
+  const tests = staging * 4 + intermediate * 3 + marts * 4  // approx test count
+  return { tables: models, transforms: tests, marts }
 }
 
 export function getSampleSQL(cleansing, pii) {

@@ -1,0 +1,246 @@
+version: 2
+
+models:
+  - name: marketing_audiences
+    description: >
+      Marketing-eligible customer audience with suppression filtering applied.
+      Combines identity-resolved customer profiles with event engagement data
+      and segments customers into audience tiers. Excludes suppressed emails.
+    columns:
+      - name: audience_member_id
+        description: Primary key. Surrogate key derived from customer_id.
+        tests:
+          - unique
+          - not_null
+      - name: customer_id
+        description: Source customer identifier.
+        tests:
+          - unique
+          - not_null
+      - name: first_name
+        description: Customer first name.
+      - name: last_name
+        description: Customer last name.
+      - name: email
+        description: Customer email, verified not suppressed.
+        tests:
+          - not_null
+      - name: phone
+        description: Customer phone number (digits only).
+      - name: city
+        description: Customer city.
+      - name: state_code
+        description: Two-letter US state code.
+      - name: state_name
+        description: Full state name from reference data.
+      - name: region
+        description: US census region for geographic targeting.
+      - name: zip_code
+        description: Five-digit ZIP code.
+      - name: loyalty_tier
+        description: "Customer loyalty tier: bronze, silver, gold, or platinum."
+      - name: preferred_channel
+        description: Customer preferred shopping channel.
+      - name: lifetime_order_count
+        description: Total historical order count.
+      - name: lifetime_spend
+        description: Total historical spend in USD.
+      - name: lead_source
+        description: Marketing channel from matched prospect. Null if no prospect match.
+      - name: lead_score
+        description: Purchase likelihood score from matched prospect. Null if no match.
+      - name: total_purchases
+        description: Count of purchase events for this customer.
+      - name: total_event_revenue
+        description: Sum of purchase revenue for this customer in USD.
+      - name: email_opens
+        description: Count of email open events.
+      - name: email_clicks
+        description: Count of email click events.
+      - name: last_event_at
+        description: Timestamp of the most recent behavioral event.
+      - name: audience_segment
+        description: >
+          Derived marketing segment based on loyalty tier and behavior.
+          vip = platinum tier, high_value = gold tier, active_buyer = 3+ purchases,
+          engaged = 2+ email clicks, standard = everyone else.
+        tests:
+          - accepted_values:
+              arguments:
+                values: ['vip', 'high_value', 'active_buyer', 'engaged', 'standard']
+
+  - name: analytics_audiences
+    description: >
+      Comprehensive customer profiles enriched with identity resolution,
+      behavioral event aggregations, and derived engagement metrics.
+      Used for analytics, reporting, and customer insights. One row per customer.
+    columns:
+      - name: profile_id
+        description: Primary key. Surrogate key derived from customer_id.
+        tests:
+          - unique
+          - not_null
+      - name: customer_id
+        description: Source customer identifier.
+        tests:
+          - unique
+          - not_null
+      - name: first_name
+        description: Customer first name.
+      - name: last_name
+        description: Customer last name.
+      - name: email
+        description: Customer email address.
+      - name: state_code
+        description: Two-letter US state code.
+      - name: state_name
+        description: Full state name from reference data.
+      - name: region
+        description: US census region.
+      - name: date_of_birth
+        description: Customer date of birth.
+      - name: age
+        description: Customer age in years, calculated from date_of_birth.
+      - name: loyalty_tier
+        description: Current loyalty program tier.
+      - name: lifetime_order_count
+        description: Total historical order count.
+      - name: lifetime_spend
+        description: Total historical spend in USD.
+      - name: preferred_channel
+        description: Customer preferred shopping channel.
+      - name: source_system
+        description: Originating system for the customer record.
+      - name: identity_match_type
+        description: "How this customer was matched to a prospect: 'email', 'name_address', or null."
+      - name: lead_source
+        description: Marketing channel from matched prospect data.
+      - name: lead_score
+        description: Purchase likelihood score from matched prospect data.
+      - name: estimated_household_income
+        description: Household income bracket from matched prospect data.
+      - name: total_events
+        description: Total behavioral events across all channels.
+      - name: distinct_event_types
+        description: Number of unique event types performed.
+      - name: distinct_channels
+        description: Number of unique channels used.
+      - name: total_purchases
+        description: Number of purchase events.
+      - name: total_event_revenue
+        description: Sum of revenue from purchase events in USD.
+      - name: product_views
+        description: Number of product view events.
+      - name: add_to_carts
+        description: Number of add-to-cart events.
+      - name: checkouts_started
+        description: Number of begin_checkout events.
+      - name: return_requests
+        description: Number of return request events.
+      - name: email_opens
+        description: Number of email open events.
+      - name: email_clicks
+        description: Number of email click events.
+      - name: most_frequent_product_category
+        description: The product category this customer most frequently interacted with.
+      - name: distinct_campaigns_touched
+        description: Number of unique marketing campaigns engaged with.
+      - name: view_to_purchase_rate
+        description: Ratio of purchases to product views. Measures conversion efficiency.
+      - name: email_click_through_rate
+        description: Ratio of email clicks to email opens. Measures email engagement.
+      - name: first_event_at
+        description: Timestamp of the customer's first recorded event.
+      - name: last_event_at
+        description: Timestamp of the customer's most recent event.
+      - name: customer_since
+        description: When the customer record was first created.
+
+  - name: compliance_lists
+    description: >
+      Full suppression compliance view joining suppression records with their
+      associated customer or prospect records. Includes severity classification
+      for prioritizing compliance actions. One row per suppression.
+    columns:
+      - name: suppression_id
+        description: Primary key. Unique suppression record identifier.
+        tests:
+          - unique
+          - not_null
+      - name: email
+        description: The suppressed email address.
+        tests:
+          - not_null
+      - name: phone
+        description: Phone number associated with the suppression. Null if email-only.
+      - name: reason
+        description: Reason for suppression.
+      - name: suppressed_at
+        description: When the suppression was created.
+      - name: expires_at
+        description: When the suppression expires. Null if permanent.
+      - name: is_active
+        description: Whether the suppression is currently in effect.
+        tests:
+          - not_null
+      - name: record_source
+        description: "Whether the suppressed email belongs to a customer, prospect, or is unknown."
+        tests:
+          - accepted_values:
+              arguments:
+                values: ['customer', 'prospect', 'unknown']
+      - name: customer_id
+        description: Matched customer ID if the suppressed email belongs to a customer. Null otherwise.
+      - name: prospect_id
+        description: Matched prospect ID if the suppressed email belongs to a prospect. Null otherwise.
+      - name: first_name
+        description: First name from the matched customer or prospect record.
+      - name: last_name
+        description: Last name from the matched customer or prospect record.
+      - name: suppression_severity
+        description: >
+          Risk-based severity classification. high = fraud/spam,
+          medium = bounce/customer request, low = opt-out/inactive/duplicate.
+        tests:
+          - accepted_values:
+              arguments:
+                values: ['high', 'low', 'medium']
+
+  - name: operations_views
+    description: >
+      Data quality and freshness dashboard showing key health metrics for each
+      source table. Includes record counts, field fill rates, category counts,
+      and data freshness timestamps. One row per source table.
+    columns:
+      - name: source_table
+        description: Primary key. Name of the source table being measured.
+        tests:
+          - unique
+          - not_null
+          - accepted_values:
+              arguments:
+                values: ['customers', 'prospects', 'events', 'suppressions']
+      - name: total_records
+        description: Total row count for this source table.
+        tests:
+          - dbt_utils.accepted_range:
+              arguments:
+                min_value: 1
+      - name: primary_field_populated
+        description: Count of records with the primary identifier field populated.
+      - name: primary_field_fill_rate_pct
+        description: Percentage of records with the primary identifier populated.
+      - name: secondary_field_populated
+        description: Count of records with the secondary identifier field populated.
+      - name: secondary_field_fill_rate_pct
+        description: Percentage of records with the secondary identifier populated.
+      - name: distinct_categories
+        description: Count of distinct category values (e.g. loyalty tiers, event types, suppression reasons).
+      - name: data_freshness_at
+        description: Timestamp of the most recently updated record in the source.
+        tests:
+          - not_null
+      - name: earliest_record
+        description: Timestamp of the oldest record in the source.
+      - name: latest_record
+        description: Timestamp of the newest record in the source.

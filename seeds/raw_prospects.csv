@@ -1,0 +1,101 @@
+prospect_id,first_name,last_name,email,phone,street_address,city,state_code,zip_code,lead_source,lead_score,estimated_household_income,created_at
+1,Lisa,Richardson,lisa.richardson759@outlook.com,942-772-3999,1600 Market St,Tampa,FL,32527,instagram_ads,88,100k-150k,2024-04-22 00:58:07
+2,Kevin,Mitchell,kevin.mitchell482@gmail.com,849-797-2166,4818 Broadway,Syracuse,NY,10965,loyalty_signup_page,61,100k-150k,2025-04-03 01:48:40
+3,Michael,Martin,michael.martin915@hotmail.com,346-523-3954,5615 Sunset Blvd,Dallas,TX,77965,seasonal_promo,100,25k-50k,2025-09-12 15:50:10
+4,Rachel,Taylor,racheltaylor36@yahoo.com,979-992-3762,4559 Summit Ave,Rochester,NY,13725,google_shopping,74,100k-150k,2023-07-21 00:36:13
+5,Samantha,Stewart,samantha.stewart39@aol.com,404-948-7112,7822 River Rd,Greensboro,NC,27015,abandoned_cart_email,2,100k-150k,2025-11-17 06:59:58
+6,Melissa,Walker,melissawalker29@icloud.com,552-519-3112,87 Elm St,Charlotte,NC,27530,abandoned_cart_email,14,50k-75k,2024-04-08 05:47:08
+7,Ryan,Kelly,ryan.kelly138@outlook.com,701-567-4087,5536 Sunset Blvd,Fort Collins,CO,81407,instagram_ads,22,150k+,2023-12-15 11:18:23
+8,thomas,Ramirez,thomas.ramirez376@icloud.com,866-238-7147,8268 Cedar Ln,Sacramento,CA,91008,abandoned_cart_email,82,50k-75k,2025-10-25 08:01:38
+9,Sharon,Lee,sharonlee7@icloud.com,318-626-8279,8690 Main St,Alexandria,VA,22756,instagram_ads,49,25k-50k,2025-12-15 22:38:14
+10,Mary,Hill,MARY.HILL621@ICLOUD.COM,340-628-2718,8525 Park Ave,Detroit,MI,49276,google_shopping,66,100k-150k,2025-02-12 05:03:26
+11,Betty,King,betty.king303@yahoo.com,240-761-9132,5865 Summit Ave,Worcester,MA,01840,abandoned_cart_email,27,75k-100k,2025-11-09 08:17:53
+12,Michelle,Brooks,michellebrooks74@icloud.com,705-352-2475,8780 Union St,Savannah,GA,30394,referral_program,100,75k-100k,2025-09-27 22:37:00
+13,Donna,King,DONNA.KING873@OUTLOOK.COM,568-893-6123,1636 Cedar Ln,Virginia Beach,VA,20424,abandoned_cart_email,55,100k-150k,2023-01-16 00:36:37
+14,Raymond,Perez,raymond.perez900@icloud.com,295-581-6615,7172 Spring St,Cincinnati,OH,44099,loyalty_signup_page,24,25k-50k,2025-12-07 17:25:36
+15,Rebecca,Perez,rebecca.perez427@aol.com,694-782-8178,961 Cedar Ln,Dallas,TX,74150,facebook_ads,24,75k-100k,2025-01-20 10:30:53
+16,Joseph,Evans,joseph.evans322@gmail.com,921-894-9598,1038 Park Ave,Newark,NJ,08342,seasonal_promo,99,100k-150k,2025-03-17 09:26:19
+17,Rachel,Gonzalez,rachel.gonzalez693@icloud.com,594-352-1894,7896 Hill St,Jersey City,NJ,08360,product_review_site,2,75k-100k,2023-09-14 22:42:12
+18,Rebecca,Green,rebeccagreen42@yahoo.com,538-484-1824,5091 Forest Rd,Philadelphia,PA,19531,instagram_ads,65,50k-75k,2023-05-03 11:01:03
+19,pamela,Cook,pamela.cook510@icloud.com,869-218-2681,7325 Forest Rd,San Jose,CA,90972,google_shopping,52,75k-100k,2025-07-27 14:19:50
+20,Samantha,Hill,samantha.hill468@outlook.com,572-255-4652,3390 Valley Rd,Lowell,MA,02376,seasonal_promo,59,50k-75k,2024-12-03 23:37:58
+21,karen,Martinez,karenmartinez1@outlook.com,563-848-5783,7246 Valley Rd,Tampa,FL,33128,facebook_ads,71,75k-100k,2025-02-03 22:49:41
+22,Helen,Carter,helencarter14@outlook.com,825-400-4072,9436 Washington Blvd,Cincinnati,OH,44541,instagram_ads,16,150k+,2024-06-08 23:04:33
+23,Laura,Gray,lauragray6@icloud.com,888-802-3018,6548 Union St,Spokane,WA,98882,email_newsletter,99,100k-150k,2023-07-29 03:35:39
+24,James,Howard,JAMES.HOWARD947@AOL.COM,999-381-3845,7092 Walnut St,Sacramento,CA,93956,influencer_campaign,94,100k-150k,2024-05-14 23:12:18
+25,Deborah,Collins,deborah.collins464@protonmail.com,336-341-7762,6519 Forest Rd,Rochester,NY,12410,email_newsletter,78,100k-150k,2024-05-02 15:26:33
+26,Stephen,Ramirez,stephen.ramirez944@icloud.com,335-927-3913,4761 Meadow Ln,Orlando,FL,33417,seasonal_promo,65,75k-100k,2025-05-23 11:19:32
+27,Pamela,Collins,pamela.collins110@gmail.com,590-348-1869,6921 Main St,Knoxville,TN,38080,referral_program,86,25k-50k,2025-11-27 14:38:17
+28,Linda,Nguyen,linda.nguyen105@aol.com,891-957-4675,530 Hill St,Fort Lauderdale,FL,33856,referral_program,96,75k-100k,2025-12-12 10:31:45
+29,Timothy,Roberts,timothy.roberts762@outlook.com,407-835-8259,9047 Oak Ave,Ann Arbor,MI,48027,influencer_campaign,29,150k+,2025-04-29 03:17:21
+30,Betty,Harris,betty.harris192@yahoo.com,952-726-2955,2907 Meadow Ln,Erie,PA,15611,facebook_ads,49,25k-50k,2025-06-26 04:34:41
+31,James,Nelson,james.nelson612@gmail.com,992-840-5934,655 Maple Dr,Norfolk,VA,22743,seasonal_promo,63,100k-150k,2025-03-27 04:08:52
+32,Nancy,Kelly,nancy.kelly550@hotmail.com,294-557-4624,2612 Sunset Blvd,Sacramento,CA,94448,influencer_campaign,28,75k-100k,2025-04-04 02:25:56
+33,Brenda,Johnson,brenda.johnson629@aol.com,449-240-6258,7302 Washington Blvd,Austin,TX,78562,email_newsletter,49,150k+,2024-03-15 08:37:45
+34,Rebecca,Sanchez,rebeccasanchez99@outlook.com,726-720-8300,4603 Oak Ave,Chattanooga,TN,38094,email_newsletter,63,25k-50k,2023-05-08 22:03:38
+35,Lisa,Ward,lisa.ward645@protonmail.com,418-901-7950,1073 Birch Ct,Nashville,TN,38382,loyalty_signup_page,14,50k-75k,2025-10-01 09:32:49
+36,Elizabeth,Martin,elizabeth.martin76@gmail.com,382-457-2154,5435 Oak Ave,San Jose,CA,90716,product_review_site,74,100k-150k,2025-09-06 00:12:09
+37,Kenneth,Williams,kenneth.williams738@aol.com,264-974-1745,8763 Main St,Charlotte,NC,28319,referral_program,90,100k-150k,2025-12-01 11:24:35
+38,Barbara,Torres,barbara.torres486@yahoo.com,746-425-3234,6474 Meadow Ln,Princeton,NJ,07064,facebook_ads,96,50k-75k,2024-04-08 00:21:06
+39,Janet,Mitchell,JANET.MITCHELL43@GMAIL.COM,786-810-7456,9095 Maple Dr,Sacramento,CA,91009,seasonal_promo,69,75k-100k,2023-11-25 22:07:31
+40,Samuel,Gomez,samuel.gomez855@outlook.com,398-317-3971,3015 Washington Blvd,Dallas,TX,78354,email_newsletter,86,100k-150k,2024-12-17 13:12:47
+41,Elizabeth,Nguyen,ELIZABETH.NGUYEN595@HOTMAIL.COM,538-565-3100,1609 Birch Ct,San Diego,CA,95944,instagram_ads,86,75k-100k,2024-05-08 15:55:06
+42,Kevin,Reyes,kevin.reyes374@protonmail.com,523-638-3762,2497 Walnut St,Rockford,IL,62322,loyalty_signup_page,1,50k-75k,2024-03-05 19:22:18
+43,Sarah,Nelson,sarah.nelson499@aol.com,311-379-2343,7297 Hill St,Bellevue,WA,98626,referral_program,36,100k-150k,2025-08-31 10:02:43
+44,Mark,Sanchez,marksanchez3@protonmail.com,719-846-1511,1747 Union St,San Antonio,TX,75093,abandoned_cart_email,75,75k-100k,2025-05-06 20:54:53
+45,Anna,Peterson,anna.peterson604@icloud.com,497-337-8613,6431 Washington Blvd,Austin,TX,79626,instagram_ads,65,75k-100k,2025-08-11 20:55:13
+46,Angela,Moore,angela.moore580@icloud.com,349-953-8921,2936 Walnut St,Jersey City,NJ,08943,referral_program,46,25k-50k,2024-07-27 21:32:31
+47,Christine,Clark,christine.clark903@gmail.com,240-864-6309,6359 Market St,Springfield,MA,01932,referral_program,14,100k-150k,2025-06-17 20:56:36
+48,Daniel,Carter,daniel.carter856@gmail.com,729-457-7165,9629 Valley Rd,Augusta,GA,31841,product_review_site,29,75k-100k,2025-01-18 22:22:00
+49,James,Bell,james.bell527@icloud.com,487-416-3461,2714 Washington Blvd,San Antonio,TX,73932,instagram_ads,24,50k-75k,2024-10-06 01:55:06
+50,Patrick,Anderson,patrick.anderson166@icloud.com,620-222-4992,7849 Birch Ct,Bellevue,WA,99210,email_newsletter,6,25k-50k,2023-03-02 21:08:28
+51,Christopher,Davis,christopher.davis614@aol.com,852-219-5644,2950 Church St,Tampa,FL,33663,product_review_site,11,50k-75k,2023-09-22 23:11:26
+52,Edward,Gray,EDWARD.GRAY524@OUTLOOK.COM,371-941-6614,2980 Spring St,Fort Worth,TX,78704,facebook_ads,59,75k-100k,2023-06-18 15:47:14
+53,ashley,Walker,ashleywalker65@icloud.com,629-353-2577,9693 Main St,Allentown,PA,19651,email_newsletter,23,75k-100k,2025-02-20 21:28:22
+54,Barbara,Cooper,barbara.cooper695@icloud.com,641-734-7892,8836 Main St,Fort Worth,TX,79648,product_review_site,48,100k-150k,2024-08-15 05:31:36
+55,Jack,Watson,JACK.WATSON785@YAHOO.COM,285-490-9908,2194 Park Ave,San Antonio,TX,77209,abandoned_cart_email,53,50k-75k,2025-06-16 20:55:21
+56,Eric,Smith,eric.smith110@yahoo.com,636-867-5155,5176 Sunset Blvd,Savannah,GA,30743,referral_program,34,100k-150k,2025-11-23 06:49:11
+57,Anthony,Evans,anthony.evans573@aol.com,695-459-6024,7905 Cedar Ln,Carmel,IN,46759,google_shopping,74,50k-75k,2023-12-23 22:29:42
+58,Rachel,Lee,rachel.lee347@protonmail.com,763-828-1852,8329 River Rd,Dallas,TX,79740,facebook_ads,21,50k-75k,2025-01-02 17:04:55
+59,Sharon,Lopez,sharon.lopez624@gmail.com,941-593-7564,3634 Hill St,San Diego,CA,90655,abandoned_cart_email,79,75k-100k,2023-09-30 06:34:52
+60,Jeffrey,Johnson,JEFFREY.JOHNSON803@AOL.COM,722-728-4795,4686 Birch Ct,Fort Lauderdale,FL,32140,abandoned_cart_email,79,50k-75k,2023-09-02 13:57:58
+61,Eric,Roberts,ERICROBERTS52@OUTLOOK.COM,885-604-7642,7293 Elm St,Springfield,MO,65736,google_shopping,76,50k-75k,2025-05-03 18:17:57
+62,Brenda,Brooks,brenda.brooks987@yahoo.com,665-613-1076,4531 Washington Blvd,Cincinnati,OH,45484,email_newsletter,34,50k-75k,2024-04-02 02:30:11
+63,Joseph,Gomez,joseph.gomez990@hotmail.com,776-695-4985,9420 Park Ave,Syracuse,NY,13628,influencer_campaign,97,50k-75k,2023-02-12 11:42:28
+64,Kimberly,Rodriguez,kimberly.rodriguez979@outlook.com,728-748-1159,3768 Forest Rd,Savannah,GA,30846,seasonal_promo,90,100k-150k,2023-04-29 02:33:35
+65,Daniel,Peterson,daniel.peterson188@icloud.com,899-394-9175,3581 Walnut St,Naperville,IL,61103,instagram_ads,95,50k-75k,2023-12-23 01:28:34
+66,Ashley,Rivera,ashley.rivera979@icloud.com,704-828-1108,1965 Elm St,Houston,TX,78837,seasonal_promo,98,100k-150k,2025-08-22 04:09:38
+67,Pamela,Scott,pamela.scott228@protonmail.com,790-331-1887,8375 Park Ave,Tacoma,WA,98815,email_newsletter,68,100k-150k,2024-06-23 11:52:15
+68,Debra,Thompson,debra.thompson706@gmail.com,212-890-4452,8491 Broadway,Virginia Beach,VA,22686,referral_program,49,75k-100k,2023-10-18 17:32:55
+69,Donald,Wright,donald.wright511@hotmail.com,415-629-7099,5622 Hill St,Alexandria,VA,21607,facebook_ads,47,100k-150k,2025-06-13 14:50:13
+70,Richard,Wright,richard.wright150@protonmail.com,956-353-8749,7082 River Rd,Syracuse,NY,11607,email_newsletter,2,50k-75k,2025-04-09 12:18:49
+71,Gary,Hill,gary.hill102@icloud.com,367-261-4530,9304 Oak Ave,Syracuse,NY,13264,seasonal_promo,33,75k-100k,2024-02-08 12:53:41
+72,Brenda,Richardson,brenda.richardson360@protonmail.com,895-820-4259,325 Sunset Blvd,Rochester,NY,10994,referral_program,74,75k-100k,2024-07-05 15:25:28
+73,Angela,Reed,angela.reed475@icloud.com,348-371-6527,6244 Spring St,Newark,NJ,07587,google_shopping,54,75k-100k,2023-05-03 21:30:23
+74,Sandra,Green,sandra.green405@outlook.com,655-999-6950,4383 Spring St,Naperville,IL,62641,facebook_ads,96,75k-100k,2023-02-05 21:16:16
+75,Nancy,Ramirez,NANCYRAMIREZ85@OUTLOOK.COM,961-917-2311,2528 Cedar Ln,Cleveland,OH,45838,product_review_site,27,50k-75k,2025-05-01 23:05:31
+76,Stephen,Carter,stephencarter68@protonmail.com,285-306-5300,6384 Forest Rd,Trenton,NJ,07219,referral_program,80,50k-75k,2023-12-23 07:00:35
+77,Andrew,Murphy,andrew.murphy36@icloud.com,565-533-8801,8631 Cedar Ln,Dallas,TX,73535,product_review_site,60,150k+,2023-07-29 21:26:55
+78,Rachel,Cox,rachel.cox767@icloud.com,777-645-9576,9791 Broadway,Fort Lauderdale,FL,34587,email_newsletter,82,75k-100k,2023-12-19 19:57:43
+79,Jeffrey,Flores,jeffrey.flores11@gmail.com,735-976-3233,4257 Maple Dr,Athens,GA,30623,product_review_site,45,50k-75k,2025-01-11 02:20:58
+80,Sharon,Nguyen,sharon.nguyen194@hotmail.com,774-647-7467,119 High St,Colorado Springs,CO,80766,loyalty_signup_page,32,50k-75k,2023-12-09 16:16:54
+81,Jason,Walker,jason.walker761@aol.com,475-622-4080,4455 Lake Dr,Lowell,MA,02329,influencer_campaign,9,50k-75k,2024-12-04 08:23:09
+82,Helen,Reed,helen.reed993@aol.com,222-390-2675,318 Maple Dr,Tampa,FL,32206,instagram_ads,37,50k-75k,2023-05-21 02:47:14
+83,Amy,Ramirez,AMY.RAMIREZ475@ICLOUD.COM,232-538-2314,5105 Market St,Toledo,OH,44522,google_shopping,97,150k+,2025-04-23 19:39:49
+84,Matthew,Allen,matthew.allen255@hotmail.com,989-653-5049,1999 Union St,Atlanta,GA,31465,google_shopping,95,150k+,2025-03-20 13:28:28
+85,Anthony,Peterson,anthony.peterson746@gmail.com,962-762-9534,5294 Cedar Ln,Durham,NC,28294,abandoned_cart_email,16,50k-75k,2025-11-01 16:10:59
+86,Joseph,Walker,joseph.walker283@aol.com,322-605-4982,247 Cedar Ln,Trenton,NJ,08627,influencer_campaign,2,150k+,2023-08-29 18:31:06
+87,Barbara,Young,barbara.young347@protonmail.com,840-261-1979,1498 Meadow Ln,San Antonio,TX,78368,facebook_ads,46,75k-100k,2025-01-27 20:06:03
+88,Brenda,Hall,brenda.hall367@icloud.com,337-456-1646,350 Summit Ave,Jersey City,NJ,07774,product_review_site,63,100k-150k,2023-10-22 19:21:21
+89,Anna,Hall,anna.hall165@gmail.com,743-358-8362,4511 Spring St,Aurora,IL,62272,email_newsletter,38,100k-150k,2024-08-11 19:46:06
+90,Robert,Campbell,robert.campbell839@hotmail.com,394-736-9151,1038 Meadow Ln,Rochester,NY,14416,seasonal_promo,99,75k-100k,2023-06-21 14:24:05
+91,alexander,Morris,alexandermorris6@protonmail.com,332-382-1512,6593 Summit Ave,San Diego,CA,94541,loyalty_signup_page,26,25k-50k,2025-10-19 01:04:56
+92,Helen,Bennett,helen.bennett736@gmail.com,213-413-9051,6003 Washington Blvd,New York,NY,14964,loyalty_signup_page,11,75k-100k,2024-07-27 07:52:35
+93,Linda,Reyes,linda.reyes855@outlook.com,279-421-9511,667 Highland Dr,Reading,PA,15577,instagram_ads,13,25k-50k,2025-03-28 09:51:37
+94,Larry,Thompson,larry.thompson785@icloud.com,790-566-8515,6803 Highland Dr,Independence,MO,63433,facebook_ads,90,75k-100k,2025-05-04 08:11:55
+95,Amanda,Lee,amanda.lee564@outlook.com,580-622-8054,7259 Hill St,Clarksville,TN,37655,loyalty_signup_page,93,50k-75k,2025-05-04 18:23:08
+96,Steven,Campbell,steven.campbell36@outlook.com,810-216-9480,6506 Main St,Princeton,NJ,08488,instagram_ads,18,150k+,2023-11-30 17:10:29
+97,Robert,Scott,robert.scott586@yahoo.com,296-238-8542,9115 Walnut St,Carmel,IN,47897,instagram_ads,46,50k-75k,2023-12-28 22:39:05
+98,Joshua,Lopez,joshua.lopez80@icloud.com,532-694-3832,9324 Birch Ct,Duluth,MN,56504,google_shopping,63,100k-150k,2025-07-13 15:49:39
+99,John,Watson,john.watson357@protonmail.com,644-626-2974,917 Union St,Atlanta,GA,30686,abandoned_cart_email,99,50k-75k,2025-09-11 17:01:26
+100,Timothy,Miller,timothy.miller579@yahoo.com,534-714-4617,675 Forest Rd,Rockford,IL,62212,product_review_site,20,25k-50k,2025-07-13 12:08:10

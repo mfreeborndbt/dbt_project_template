@@ -1,0 +1,151 @@
+customer_id,first_name,last_name,email,phone,street_address,city,state_code,zip_code,date_of_birth,loyalty_tier,lifetime_order_count,lifetime_spend,preferred_channel,created_at,updated_at,source_system
+1,Samantha,Anderson,samantha.anderson760@outlook.com,4504283286,8929 Sunset Blvd,San Francisco,CA,93679,1979-12-16,gold,20,1686.06,online,2020-01-21 04:34:57,2024-11-02 00:15:55,loyalty_program
+2,Amanda,Scott,amanda.scott221@protonmail.com,544-304-2519,5926 Walnut St,Dallas,TX,79072,1961-03-29,bronze,5,468.08,catalog,2020-05-22 08:54:49,2025-11-26 14:50:30,pos_instore
+3,Donna,Hernandez,donna.hernandez888@gmail.com,589-484-8428,8752 Highland Dr,Buffalo,NY,11339,1996-06-21,silver,7,459.92,mobile,2023-03-24 22:14:55,2025-01-26 16:11:31,customer_service
+4,Mark,Adams,mark.adams235@protonmail.com,232-523-7572,9578 Sunset Blvd,Sacramento,CA,93271,1987-06-23,bronze,4,227.24,catalog,2021-11-12 09:44:27,2024-10-16 10:41:26,customer_service
+5,Amy,Lopez,,356-842-3621,1877 Meadow Ln,Sacramento,CA,96151,1978-12-09,gold,16,1105.0,catalog,2022-11-22 21:19:18,2024-09-25 15:28:59,mobile_app
+6,Sharon,Lee,sharon.lee4@icloud.com,936-469-9201,8690 Main St,Alexandria,VA,22756,1998-11-01,gold,20,2180.77,in_store,2020-03-01 12:17:28,2024-09-25 21:21:55,mobile_app
+7,Michelle,Walker,michelle.walker247@aol.com,280-287-8962,8836 Union St,San Francisco,CA,95840,1982-12-19,gold,21,977.45,in_store,2023-05-24 15:01:19,2025-12-04 17:09:08,mobile_app
+8,Jeffrey,Kelly,jeffrey.kelly124@yahoo.com,430-265-6539,3900 Park Ave,Princeton,NJ,07439,2003-05-18,bronze,6,490.61,online,2021-02-15 01:53:10,2025-09-17 13:00:53,customer_service
+9,Jacob,Young,jacob.young827@hotmail.com,394-296-2588,5560 Pine Rd,Norfolk,VA,21670,1972-01-24,silver,9,669.96,online,2023-10-25 19:03:03,2024-10-17 21:11:14,loyalty_program
+10,Nancy,Scott,nancy.scott256@protonmail.com,277-653-2604,961 Cedar Ln,Arlington,VA,20118,1990-01-10,bronze,5,631.67,in_store,2022-04-03 22:58:23,2025-06-19 09:58:14,mobile_app
+11,Jason,Richardson,jason.richardson159@yahoo.com,503-422-1958,1313 Cedar Ln,Seattle,WA,99219,1961-02-04,silver,10,969.78,catalog,2021-12-31 18:04:25,2025-05-10 14:55:18,ecommerce
+12,Larry,Young,larry.young609@gmail.com,834-283-7868,5181 Union St,Minneapolis,MN,55020,1996-02-12,silver,12,1367.7,mobile,2020-11-06 15:08:33,2024-08-26 21:40:43,customer_service
+13,Margaret,Bell,margaret.bell136@outlook.com,270-450-7054,2201 Park Ave,New York,NY,10877,1968-12-11,bronze,6,571.06,online,2022-04-26 03:45:17,2025-02-04 20:19:03,customer_service
+14,Anthony,Baker,  ANTHONY.BAKER704@ICLOUD.COM  ,470-717-9004,7240 High St,Jacksonville,FL,34300,1955-11-13,bronze,1,126.97,online,2020-12-13 13:55:16,2024-08-28 10:38:49,pos_instore
+15,Anna,Jones,anna.jones597@aol.com,351-640-3088,2533 Washington Blvd,Savannah,GA,31640,1970-11-19,bronze,3,328.93,in_store,2023-07-04 22:53:58,2024-07-20 06:03:04,pos_instore
+16,Jack,Nelson,jack.nelson822@icloud.com,952-454-5371,3729 Washington Blvd,Detroit,MI,49352,1972-04-29,bronze,4,476.64,in_store,2023-05-22 23:46:37,2025-03-12 23:14:46,mobile_app
+17,David,Scott,  DAVID.SCOTT657@AOL.COM  ,609-895-9785,7150 Spring St,Akron,OH,43474,1989-07-23,bronze,1,107.83,mobile,2021-08-13 13:18:02,2025-01-14 20:22:18,ecommerce
+18,Alexander,Morris,alexander.morris533@protonmail.com,751-903-4228,6593 Summit Ave,San Diego,CA,94541,1966-06-02,bronze,3,290.34,online,2021-08-19 00:38:03,2025-05-23 13:41:15,loyalty_program
+19,Gregory,Thompson,gregory.thompson309@hotmail.com,761-200-5978,1390 Lake Dr,Independence,MO,65720,1985-01-26,bronze,6,458.1,in_store,2020-10-17 03:27:14,2024-12-30 10:16:04,mobile_app
+20,Mark,Sanchez,mark.sanchez26@gmail.com,4506862193,1747 Union St,San Antonio,TX,75093,1970-10-12,silver,11,1063.53,catalog,2024-05-28 05:43:45,2025-06-26 19:50:15,ecommerce
+21,Brenda,Young,brenda.young468@yahoo.com,675-883-9702,7778 Broadway,Austin,TX,79459,1977-03-07,platinum,42,4904.04,catalog,2022-05-11 13:49:58,2025-08-09 21:43:58,loyalty_program
+22, Benjamin ,Walker,benjamin.walker451@gmail.com,930-492-4841,6813 Oak Ave,Pittsburgh,PA,18442,1989-12-10,bronze,3,136.47,in_store,2020-03-01 16:24:28,2025-09-21 03:38:45,loyalty_program
+23,Kathleen,Smith,  KATHLEEN.SMITH306@PROTONMAIL.COM  ,599-629-9818,2705 Broadway,Cleveland,OH,45549,2002-12-02,gold,21,1605.6,catalog,2020-03-24 18:45:51,2025-05-03 01:04:11,customer_service
+24,Larry,Brown,larry.brown659@hotmail.com,338-672-3977,7706 Main St,Sacramento,CA,90426,1986-05-25,bronze,6,320.83,catalog,2021-11-27 15:12:58,2025-11-17 23:33:51,ecommerce
+25,Katherine,Garcia,katherine.garcia973@yahoo.com,404-220-3496,1877 Union St,San Francisco,CA,92548,1964-09-12,bronze,4,327.01,mobile,2020-03-20 18:43:18,2025-02-28 07:18:16,customer_service
+26,Gregory,Carter,gregory.carter965@icloud.com,403-277-4978,5591 Main St,Greensboro,NC,28690,1998-12-23,bronze,3,327.65,online,2020-11-23 21:32:54,2025-06-02 17:27:42,mobile_app
+27,Samantha,Rogers,samantha.rogers446@yahoo.com,951-734-5425,7386 Washington Blvd,San Antonio,TX,77969,1988-12-31,silver,13,1006.49,mobile,2022-11-11 03:33:01,2024-07-23 07:00:24,loyalty_program
+28,Carol,White,carol.white218@outlook.com,464-548-5581,8042 Broadway,Seattle,WA,98191,1981-05-25,gold,12,940.33,in_store,2021-11-19 11:25:31,2025-05-11 02:35:00,pos_instore
+29,Michelle,Brooks,michelle.brooks485@aol.com,743-552-7971,8780 Union St,Savannah,GA,30394,1974-05-31,platinum,42,2737.73,mobile,2024-02-13 08:27:48,2025-01-31 18:19:35,customer_service
+30,Shirley,Gray,shirley.gray103@protonmail.com,398-503-4727,8043 Pine Rd,Philadelphia,PA,17330,1997-02-10,bronze,3,274.41,online,2024-01-27 07:31:06,2025-06-08 02:56:00,mobile_app
+31,Nancy,Miller,  NANCY.MILLER964@PROTONMAIL.COM  ,689-316-2070,9767 Spring St,Buffalo,NY,14281,1989-02-15,silver,2,132.57,mobile,2023-10-31 16:47:34,2025-06-09 20:55:03,mobile_app
+32, Emma ,Stewart,emma.stewart583@aol.com,2618242625,9730 Market St,Naperville,IL,60134,1975-10-08,platinum,17,963.1,in_store,2022-06-14 02:39:26,2025-02-05 14:15:08,loyalty_program
+33,Elizabeth,Robinson,  ELIZABETH.ROBINSON807@PROTONMAIL.COM  ,840-803-4241,9326 Lake Dr,Albany,NY,11019,1997-01-18,silver,11,1034.13,in_store,2022-08-02 18:40:56,2025-12-26 11:58:52,loyalty_program
+34,Paul,Bell,paul.bell506@hotmail.com,282-812-1653,2871 Market St,Carmel,IN,47335,1994-09-03,gold,14,516.8,online,2022-05-14 04:51:27,2024-11-18 23:12:10,customer_service
+35,Sharon,Reed,sharon.reed482@outlook.com,618-541-6260,5297 Pine Rd,San Jose,CA,94215,1955-02-07,silver,6,434.62,catalog,2023-12-06 07:27:11,2025-05-17 23:29:35,ecommerce
+36,Matthew,Kelly,matthew.kelly638@protonmail.com,7108408242,3921 Summit Ave,Savannah,GA,30638,1956-03-24,gold,10,861.77,catalog,2023-06-21 13:59:27,2024-09-11 09:32:43,pos_instore
+37,Joseph,Morgan,joseph.morgan664@protonmail.com,357-710-5781,2237 Elm St,Austin,TX,79630,1992-03-23,silver,9,1002.18,in_store,2022-11-21 22:56:04,2025-07-30 08:54:58,mobile_app
+38,James,Torres,james.torres858@aol.com,793-875-9022,9369 River Rd,Springfield,IL,61683,1958-12-01,gold,19,1241.01,catalog,2022-09-15 12:56:47,2025-07-03 08:54:58,loyalty_program
+39,Deborah,Martin,deborah.martin988@gmail.com,329-714-6439,4343 Forest Rd,Chandler,AZ,86419,1990-08-29,gold,16,1287.28,in_store,2020-09-06 12:44:39,2025-03-13 04:54:23,customer_service
+40,Timothy,Green,timothy.green894@aol.com,236-832-2121,4907 Main St,Seattle,WA,98665,1960-01-13,bronze,4,404.28,online,2022-06-30 11:05:13,2025-04-05 10:14:27,mobile_app
+41,Sharon,Jackson,sharon.jackson544@hotmail.com,779-898-3950,7623 Lake Dr,Syracuse,NY,11295,1961-08-17,bronze,4,347.56,in_store,2023-10-04 09:45:35,2025-03-26 09:48:36,customer_service
+42,Joshua,Stewart,joshua.stewart468@protonmail.com,509-403-7302,4498 Main St,Syracuse,NY,10402,1999-07-25,gold,5,342.21,mobile,2022-06-08 04:10:57,2024-12-26 17:43:03,customer_service
+43,Dorothy,Lewis,dorothy.lewis636@outlook.com,894-973-3240,2878 Birch Ct,Orlando,FL,34212,1987-10-28,silver,4,390.46,mobile,2024-04-08 00:31:45,2025-01-28 16:16:40,pos_instore
+44,Steven,Cooper,steven.cooper765@protonmail.com,546-317-8673,229 Park Ave,Reading,PA,16013,1995-10-20,platinum,17,1868.6,catalog,2023-02-19 03:44:19,2025-12-05 14:25:48,mobile_app
+45,Justin,Carter,justin.carter111@icloud.com,439-682-1410,1912 Maple Dr,Atlanta,GA,31939,1958-05-04,silver,12,1349.06,online,2022-08-03 15:04:04,2025-07-18 15:11:18,ecommerce
+46,Richard,Walker,richard.walker139@hotmail.com,664-579-9850,7286 Washington Blvd,Knoxville,TN,37213,1987-12-15,silver,7,673.04,catalog,2023-01-19 08:39:37,2024-08-17 00:44:07,loyalty_program
+47,Emily,Harris,emily.harris972@protonmail.com,665-293-4475,9608 Birch Ct,Dallas,TX,75992,1968-03-28,silver,10,396.34,in_store,2020-01-09 19:26:02,2025-02-01 08:46:39,pos_instore
+48,Thomas,Cox,  THOMAS.COX818@YAHOO.COM  ,312-876-1422,7803 Broadway,Rochester,NY,14205,1964-10-13,bronze,4,321.31,mobile,2023-11-05 07:58:01,2025-07-27 08:14:02,pos_instore
+49,Brandon,Garcia,  BRANDON.GARCIA309@HOTMAIL.COM  ,858-231-1996,4506 Spring St,Lowell,MA,02124,1984-03-04,platinum,35,3280.46,catalog,2023-03-29 10:17:24,2025-10-08 00:11:28,customer_service
+50,Donna,Rogers,donna.rogers620@hotmail.com,301-918-2874,6993 Forest Rd,Mesa,AZ,85767,1968-09-10,gold,21,1544.84,catalog,2024-01-13 11:58:37,2024-08-22 03:27:20,ecommerce
+51,William,Lopez,william.lopez99@icloud.com,956-581-3131,5762 Pine Rd,Edison,NJ,08040,1974-02-01,silver,12,1112.17,catalog,2021-04-25 17:31:04,2025-11-23 02:27:07,loyalty_program
+52,Mark,Wilson,  MARK.WILSON866@AOL.COM  ,576-317-5564,5752 Main St,Cleveland,OH,43587,1990-12-15,silver,8,720.16,mobile,2020-08-04 04:39:55,2024-10-19 04:44:06,ecommerce
+53,Barbara,Howard,barbara.howard386@hotmail.com,664-549-3578,7243 Sunset Blvd,Tampa,FL,32885,2000-12-18,bronze,3,321.14,online,2020-12-19 14:50:54,2025-03-26 02:29:18,loyalty_program
+54,Joseph,Torres,joseph.torres499@aol.com,883-515-1744,8150 Highland Dr,Boulder,CO,80360,1966-08-04,bronze,5,179.37,in_store,2023-03-27 06:19:18,2025-08-18 16:03:16,pos_instore
+55,Nicholas,Richardson,nicholas.richardson74@hotmail.com,959-243-8147,7539 Summit Ave,Cincinnati,OH,43361,1994-03-07,bronze,3,271.96,catalog,2020-11-24 21:43:39,2025-01-05 23:44:52,loyalty_program
+56,Emma,Phillips,emma.phillips81@hotmail.com,517-963-6562,2420 Washington Blvd,Nashville,TN,37309,1977-12-18,bronze,2,144.76,in_store,2021-09-04 21:39:06,2024-11-12 18:15:22,customer_service
+57,Karen,Martinez,karen.martinez975@protonmail.com,843-705-8601,7246 Valley Rd,Tampa,FL,33128,1960-01-15,gold,23,2178.36,mobile,2022-12-29 10:42:50,2025-07-30 01:26:42,ecommerce
+58,Michelle,Morgan,michelle.morgan39@gmail.com,577-493-2257,7793 Church St,Jersey City,NJ,08962,1960-07-20,silver,5,390.45,online,2023-10-31 17:26:17,2024-09-19 09:24:53,mobile_app
+59,Carolyn,Hernandez,carolyn.hernandez662@yahoo.com,240-453-8172,5483 Elm St,Mesa,AZ,85194,1989-09-05,platinum,41,2747.44,catalog,2022-06-01 19:32:03,2025-01-12 17:32:30,customer_service
+60,Karen,Nelson,karen.nelson597@icloud.com,344-558-6082,8625 Elm St,San Jose,CA,94165,1987-06-18,platinum,33,2869.75,mobile,2020-02-26 15:22:03,2025-04-08 15:18:37,mobile_app
+61,Nancy,Ramirez,nancy.ramirez971@protonmail.com,697-396-4711,2528 Cedar Ln,Cleveland,OH,45838,1969-11-07,platinum,16,997.45,online,2023-09-21 19:17:41,2024-08-03 22:29:09,loyalty_program
+62,George,Walker,george.walker626@outlook.com,970-966-8355,4617 Union St,Princeton,NJ,08030,2002-04-27,bronze,4,503.21,in_store,2023-07-24 17:36:48,2024-11-03 20:58:59,pos_instore
+63,Nicole,Moore,nicole.moore54@icloud.com,692-580-2680,3638 Broadway,Rochester,NY,10219,1992-03-22,gold,20,1218.03,mobile,2020-06-14 11:07:17,2025-05-04 22:26:15,customer_service
+64,Melissa,Walker,melissa.walker84@outlook.com,429-228-6221,87 Elm St,Charlotte,NC,27530,1974-05-07,platinum,25,1167.48,catalog,2021-04-09 12:59:27,2025-08-31 06:27:09,customer_service
+65, Shirley ,Stewart,shirley.stewart795@outlook.com,443-508-2996,2353 Lake Dr,San Antonio,TX,73313,1986-08-27,bronze,7,320.94,catalog,2022-01-17 09:46:11,2025-09-17 05:56:33,loyalty_program
+66,Nancy,Hernandez,nancy.hernandez999@outlook.com,2697389914,5650 Washington Blvd,Nashville,TN,38201,1984-10-30,silver,10,694.8,catalog,2021-02-18 11:44:25,2024-08-04 10:28:37,mobile_app
+67, Anna ,Baker,anna.baker851@protonmail.com,901-675-8840,5081 Church St,Jacksonville,FL,34227,1997-06-21,silver,4,429.51,online,2022-02-26 00:26:36,2024-07-29 10:39:38,pos_instore
+68,Andrew,Rivera,andrew.rivera887@icloud.com,539-479-3039,8508 Park Ave,Los Angeles,CA,95956,1993-01-31,gold,19,1908.07,catalog,2020-09-02 05:13:26,2025-05-31 11:05:56,customer_service
+69,Nancy,Cox,  NANCY.COX329@GMAIL.COM  ,281-535-5843,4499 Valley Rd,Philadelphia,PA,15615,1991-06-11,bronze,8,404.39,catalog,2023-02-02 18:26:29,2025-08-03 12:36:59,pos_instore
+70,Patricia,Jackson,patricia.jackson36@yahoo.com,268-441-7001,6522 Forest Rd,Trenton,NJ,07512,1965-03-06,bronze,5,459.7,mobile,2020-03-21 12:14:18,2024-11-22 12:11:13,loyalty_program
+71,Eric,Roberts,eric.roberts121@outlook.com,993-466-8311,7293 Elm St,Springfield,MO,65736,1986-03-03,bronze,7,707.82,in_store,2020-07-20 18:12:30,2025-09-01 04:41:23,customer_service
+72,Donna,Hill,donna.hill729@icloud.com,917-853-3852,7658 High St,Dallas,TX,78314,1962-09-26,gold,21,945.7,in_store,2020-07-23 06:32:03,2025-02-26 05:35:48,loyalty_program
+73,Carolyn,Cooper,carolyn.cooper421@protonmail.com,619-788-2208,2115 Sunset Blvd,Clarksville,TN,37123,1966-02-20,bronze,3,247.35,mobile,2024-05-28 16:29:42,2024-10-27 20:24:54,mobile_app
+74,Lisa,Lee,lisa.lee958@icloud.com,430-554-9501,2763 Walnut St,Rockford,IL,60632,1970-05-11,gold,6,357.06,mobile,2022-11-14 22:44:27,2025-09-11 18:36:06,ecommerce
+75,Patricia,Hernandez,patricia.hernandez972@icloud.com,989-790-5336,6654 Lake Dr,San Jose,CA,90597,1960-05-17,silver,13,1120.13,mobile,2021-05-06 03:19:57,2025-06-07 10:50:25,loyalty_program
+76,Kathleen,Morgan,kathleen.morgan349@aol.com,347-520-6231,1587 Oak Ave,Tampa,FL,33576,1992-07-06,gold,15,697.66,online,2022-02-10 08:22:24,2024-11-02 01:01:02,mobile_app
+77,Pamela,Green,pamela.green782@yahoo.com,710-727-8648,8109 Spring St,Jacksonville,FL,33173,2003-02-24,silver,9,378.9,catalog,2020-01-26 09:45:04,2024-09-22 11:53:27,loyalty_program
+78,Sarah,King,sarah.king783@hotmail.com,574-246-7563,1947 Maple Dr,Atlanta,GA,30808,1988-06-24,bronze,6,395.09,catalog,2022-11-19 12:01:56,2025-09-07 06:44:20,mobile_app
+79,Christopher,Sanchez,christopher.sanchez412@aol.com,241-246-1637,4903 Walnut St,Springfield,MA,02039,2000-09-23,bronze,6,465.29,in_store,2024-03-01 21:36:49,2025-09-11 05:40:07,mobile_app
+80,Jacob,Williams,jacob.williams340@icloud.com,312-626-6040,6230 Maple Dr,Savannah,GA,30066,1964-11-10,gold,7,428.88,in_store,2021-08-15 17:54:39,2024-07-15 17:01:05,loyalty_program
+81,Kenneth,Collins,kenneth.collins423@icloud.com,408-620-9221,7532 High St,Austin,TX,77776,1986-10-14,gold,16,1536.16,mobile,2022-04-01 08:16:22,2025-10-17 20:39:06,loyalty_program
+82,Matthew,Young,matthew.young572@outlook.com,430-504-5735,6465 Hill St,Pittsburgh,PA,17380,1958-10-10,gold,18,1383.33,mobile,2022-06-12 15:16:20,2024-08-31 09:12:55,mobile_app
+83, Jeffrey ,Allen,jeffrey.allen220@yahoo.com,751-477-5450,1648 Meadow Ln,Tacoma,WA,98011,1969-03-03,bronze,6,360.54,in_store,2023-06-18 05:13:07,2025-11-20 02:48:13,loyalty_program
+84, Kathleen ,Sanchez,kathleen.sanchez329@outlook.com,861-260-2465,3053 Highland Dr,Allentown,PA,15307,1955-10-31,silver,4,442.75,in_store,2022-07-16 01:44:09,2025-09-15 03:34:35,customer_service
+85,Susan,Nelson,susan.nelson466@icloud.com,756-736-9092,5524 Lake Dr,Reading,PA,16583,1970-09-29,gold,11,676.72,mobile,2023-06-13 19:33:12,2025-05-29 04:57:59,customer_service
+86,Carol,Lopez,,389-343-8822,5891 Summit Ave,Raleigh,NC,27133,1965-08-09,bronze,2,110.82,mobile,2023-12-16 22:21:56,2025-02-24 07:17:05,pos_instore
+87,Stephanie,Bell,stephanie.bell707@gmail.com,854-502-7021,3579 Union St,Springfield,IL,62787,1962-05-06,silver,5,390.08,mobile,2024-06-20 16:36:58,2025-06-12 23:59:09,customer_service
+88,Alexander,Campbell,alexander.campbell940@aol.com,314-263-9972,8362 Broadway,Los Angeles,CA,93714,1966-11-02,platinum,17,872.57,catalog,2024-05-13 14:31:58,2025-05-19 16:04:31,loyalty_program
+89,Larry,Davis,larry.davis474@icloud.com,515-940-1356,7735 Oak Ave,Springfield,MO,64675,1971-02-23,bronze,2,151.48,mobile,2021-02-24 18:18:29,2025-11-11 06:53:33,loyalty_program
+90,Melissa,Carter,,5842829835,4889 Broadway,Edison,NJ,07869,2002-09-21,bronze,3,168.12,in_store,2023-03-24 08:54:11,2024-12-26 09:14:54,pos_instore
+91,Ryan,Hall,ryan.hall283@yahoo.com,942-983-2848,725 River Rd,San Antonio,TX,75220,2003-06-04,bronze,4,206.54,online,2021-11-06 00:45:58,2024-08-13 20:11:35,pos_instore
+92,Nicholas,Nguyen,nicholas.nguyen836@icloud.com,789-526-6253,6245 Church St,Rochester,NY,13411,1991-08-17,bronze,3,209.72,in_store,2021-04-08 14:28:17,2025-02-18 22:19:36,loyalty_program
+93,Nancy,Ward,nancy.ward247@protonmail.com,430-507-3365,7370 Hill St,Virginia Beach,VA,24488,1972-02-02,gold,7,839.84,in_store,2020-06-09 02:50:58,2025-01-25 12:29:12,loyalty_program
+94,Gregory,James,gregory.james895@gmail.com,392-979-4555,3975 Summit Ave,Sacramento,CA,95765,1973-05-07,silver,8,911.85,in_store,2023-05-17 07:01:46,2025-01-02 21:27:08,customer_service
+95,Carol,Torres,carol.torres478@aol.com,864-567-6053,750 Walnut St,Savannah,GA,31520,1968-02-03,bronze,8,633.08,catalog,2020-02-20 09:26:36,2025-01-19 13:10:54,customer_service
+96,Justin,Brooks,justin.brooks303@yahoo.com,400-537-4768,8038 Broadway,Grand Rapids,MI,49501,1986-08-06,bronze,5,455.07,mobile,2021-06-09 21:21:59,2024-10-17 17:00:57,customer_service
+97,Gary,White,  GARY.WHITE658@GMAIL.COM  ,736-234-2217,991 Spring St,Carmel,IN,47870,1998-05-08,platinum,8,599.4,in_store,2024-02-24 17:03:35,2024-07-13 05:15:41,ecommerce
+98,Jonathan,Diaz,jonathan.diaz13@gmail.com,742-939-5501,2440 Washington Blvd,Grand Rapids,MI,49270,2002-03-25,silver,6,494.98,catalog,2022-02-23 05:39:52,2025-04-02 07:15:39,mobile_app
+99,Ronald,Hernandez,  RONALD.HERNANDEZ983@HOTMAIL.COM  ,670-778-4984,155 Summit Ave,Savannah,GA,30171,1999-11-05,platinum,18,1715.93,online,2023-09-10 02:38:55,2025-11-13 21:56:32,mobile_app
+100,Larry,Gonzalez,larry.gonzalez942@gmail.com,4354168790,2363 Union St,Chattanooga,TN,37167,1981-11-06,bronze,3,353.77,online,2021-05-19 17:10:06,2025-09-12 00:56:34,pos_instore
+101,Larry,Roberts,larry.roberts340@hotmail.com,973-957-3292,5348 Main St,Evansville,IN,47605,1995-06-03,gold,6,247.98,online,2024-03-04 06:02:42,2024-12-25 04:48:28,mobile_app
+102,Stephen,Carter,stephen.carter191@icloud.com,799-876-7227,6384 Forest Rd,Trenton,NJ,07219,1963-03-18,bronze,7,749.76,online,2020-01-17 03:23:01,2025-02-25 10:31:18,loyalty_program
+103,George,Wright,,391-641-8353,6780 River Rd,Houston,TX,79238,1976-10-11,silver,13,555.41,online,2024-06-07 00:22:13,2024-11-09 17:15:17,loyalty_program
+104,Lisa,Moore,lisa.moore309@outlook.com,704-349-2036,3204 Broadway,Philadelphia,PA,16110,1982-05-02,bronze,6,397.66,mobile,2020-01-22 00:36:41,2025-05-04 08:13:59,mobile_app
+105,Helen,Carter,helen.carter451@outlook.com,640-866-3230,9436 Washington Blvd,Cincinnati,OH,44541,1980-02-23,bronze,6,446.73,catalog,2023-05-05 19:22:01,2025-04-10 12:22:58,ecommerce
+106,Larry,Sanchez,larry.sanchez559@yahoo.com,898-986-1440,4962 Washington Blvd,Aurora,CO,81349,1968-10-29,platinum,33,2385.26,online,2023-08-07 14:42:25,2025-04-19 19:37:05,ecommerce
+107,Laura,Gray,laura.gray597@hotmail.com,747-718-7853,6548 Union St,Spokane,WA,98882,1964-07-03,silver,6,263.15,mobile,2020-02-02 18:29:57,2024-09-15 14:09:34,mobile_app
+108, Mark ,Gomez,mark.gomez572@aol.com,904-789-4621,1407 Pine Rd,Worcester,MA,01714,1982-12-25,silver,11,1128.34,in_store,2022-12-01 20:54:21,2025-06-19 16:00:55,pos_instore
+109,Eric,Cooper,eric.cooper488@gmail.com,648-939-8412,3997 Church St,Cleveland,OH,45261,1969-05-14,bronze,3,299.65,mobile,2022-10-25 08:22:39,2025-09-08 20:20:27,loyalty_program
+110,Cynthia,Robinson,cynthia.robinson645@yahoo.com,390-855-8080,1026 Walnut St,Charlotte,NC,28643,2003-03-02,bronze,6,449.35,online,2021-08-03 20:44:09,2025-04-11 02:52:34,mobile_app
+111,Betty,Rogers,betty.rogers269@icloud.com,701-740-6134,9670 Elm St,Dallas,TX,75866,1965-07-29,silver,13,1107.99,catalog,2022-01-11 05:16:19,2025-02-23 04:41:45,ecommerce
+112,Nancy,Mitchell,nancy.mitchell524@hotmail.com,628-810-3258,7390 Spring St,Houston,TX,76242,1955-11-11,silver,9,704.92,in_store,2024-02-14 15:03:37,2024-10-15 01:11:29,pos_instore
+113,Deborah,Richardson,deborah.richardson669@hotmail.com,618-901-9056,7493 Walnut St,Scottsdale,AZ,86126,2000-10-29,silver,11,560.96,in_store,2020-12-17 17:37:25,2025-09-18 20:09:49,ecommerce
+114,Paul,Cox,paul.cox556@protonmail.com,974-242-8231,1426 Broadway,Atlanta,GA,31590,1976-04-04,silver,8,806.23,in_store,2021-10-14 01:39:01,2025-09-30 15:41:44,mobile_app
+115,Alexander,Reyes,alexander.reyes170@aol.com,342-411-4390,8429 Meadow Ln,Detroit,MI,48278,1991-12-05,gold,22,1787.15,in_store,2020-07-03 04:40:33,2025-02-01 09:41:07,pos_instore
+116,Rachel,Taylor,rachel.taylor150@icloud.com,529-453-7434,4559 Summit Ave,Rochester,NY,13725,1998-10-14,silver,12,1066.63,online,2022-10-13 20:27:26,2025-09-26 00:26:15,ecommerce
+117,Janet,Lopez,janet.lopez651@icloud.com,914-566-2037,9276 Market St,Richmond,VA,20497,1959-02-14,gold,17,2031.69,catalog,2020-11-05 08:49:50,2025-10-30 08:49:56,loyalty_program
+118,Robert,Thomas,  ROBERT.THOMAS452@HOTMAIL.COM  ,200-638-4314,2712 Oak Ave,San Antonio,TX,78425,1982-05-29,platinum,18,918.53,mobile,2021-12-28 11:01:48,2025-05-30 09:26:40,ecommerce
+119,Alexander,Gonzalez,alexander.gonzalez219@hotmail.com,279-335-4705,6277 Elm St,Los Angeles,CA,90845,1983-02-10,silver,8,289.53,online,2023-02-15 23:23:08,2025-02-18 10:31:25,pos_instore
+120,Timothy,Moore,timothy.moore71@aol.com,776-208-3688,9660 Highland Dr,San Antonio,TX,76180,1993-07-10,silver,5,589.08,catalog,2022-09-04 03:05:34,2024-10-17 14:37:25,pos_instore
+121,Emily,Hernandez,emily.hernandez567@aol.com,814-938-5668,3922 Market St,Albany,NY,10924,1976-08-17,gold,6,337.26,in_store,2024-04-01 03:34:26,2025-11-08 14:43:00,customer_service
+122, Elizabeth ,Howard,elizabeth.howard370@outlook.com,335-596-7895,6521 Church St,San Diego,CA,95149,1999-12-14,bronze,5,614.57,online,2023-07-14 16:51:16,2025-05-26 00:00:52,loyalty_program
+123,William,Ward,william.ward631@yahoo.com,484-285-6077,4006 Elm St,Chattanooga,TN,37247,1995-09-04,bronze,3,249.13,online,2020-06-19 23:13:53,2025-02-26 05:35:04,pos_instore
+124,Jessica,Johnson,jessica.johnson719@gmail.com,367-708-6680,7035 Park Ave,Fort Worth,TX,73824,1978-08-04,silver,7,498.75,mobile,2020-08-27 10:45:29,2025-07-21 08:51:39,loyalty_program
+125, Angela ,Campbell,angela.campbell512@protonmail.com,7803707024,2459 Cedar Ln,Los Angeles,CA,94529,1992-08-15,bronze,1,70.03,online,2021-11-28 13:04:31,2025-03-07 22:49:27,pos_instore
+126, Rebecca ,Green,rebecca.green846@gmail.com,785-581-2956,5091 Forest Rd,Philadelphia,PA,19531,1995-12-23,silver,3,178.02,online,2020-01-25 18:13:29,2025-04-13 13:09:19,pos_instore
+127,Donna,Wood,donna.wood758@aol.com,4486757033,158 Forest Rd,Chicago,IL,62693,1988-10-03,silver,9,893.59,in_store,2022-08-13 09:39:19,2024-09-19 17:45:00,pos_instore
+128,Shirley,Walker,shirley.walker504@gmail.com,345-928-5584,9698 Walnut St,Detroit,MI,48891,1966-09-23,bronze,5,478.93,online,2022-01-05 14:58:48,2025-02-12 13:14:06,mobile_app
+129,Kenneth,Turner,kenneth.turner326@hotmail.com,478-439-2223,7405 Lake Dr,Aurora,IL,61086,1965-10-04,platinum,16,762.86,catalog,2020-10-07 22:16:12,2024-10-31 10:09:48,mobile_app
+130,Alexander,James,alexander.james221@protonmail.com,535-351-2494,9109 Highland Dr,Sacramento,CA,92046,1963-07-01,gold,15,1207.06,mobile,2023-12-06 12:26:30,2024-09-18 03:41:26,pos_instore
+131, Jessica ,Johnson,  JESSICA.JOHNSON851@PROTONMAIL.COM  ,427-333-4246,2111 Elm St,San Diego,CA,91003,1958-10-31,gold,12,1012.09,online,2023-12-03 06:16:22,2024-08-09 07:57:18,pos_instore
+132,Pamela,Morris,  PAMELA.MORRIS509@GMAIL.COM  ,591-899-7990,6751 High St,Greensboro,NC,27130,1962-11-14,bronze,3,186.34,in_store,2022-05-19 05:36:34,2025-04-24 11:55:20,pos_instore
+133,Rebecca,Sanchez,rebecca.sanchez256@icloud.com,756-219-7266,4603 Oak Ave,Chattanooga,TN,38094,1987-01-25,gold,15,1233.19,mobile,2021-12-24 04:00:07,2024-11-01 23:37:19,ecommerce
+134,Ashley,Walker,ashley.walker547@protonmail.com,954-257-4594,9693 Main St,Allentown,PA,19651,1967-10-01,silver,10,1194.33,in_store,2021-08-07 19:43:09,2025-07-18 07:46:16,customer_service
+135,Michelle,Thompson,michelle.thompson39@gmail.com,257-438-4584,976 Main St,Tacoma,WA,99202,1967-09-16,bronze,4,275.78,in_store,2020-12-10 14:50:18,2025-08-13 18:50:51,mobile_app
+136,Elizabeth,Mitchell,elizabeth.mitchell601@gmail.com,544-509-6285,5847 Washington Blvd,Winston-Salem,NC,28674,1970-09-24,bronze,5,558.78,mobile,2023-03-21 14:21:51,2025-02-24 07:35:58,mobile_app
+137,Thomas,Thompson,thomas.thompson972@icloud.com,786-600-1530,2751 Valley Rd,Los Angeles,CA,95807,1985-02-13,bronze,4,344.77,catalog,2023-10-19 15:08:30,2024-07-09 20:25:47,mobile_app
+138,Anthony,Young,anthony.young359@outlook.com,310-937-1020,9471 Valley Rd,San Francisco,CA,91332,1995-06-27,bronze,7,863.53,catalog,2020-08-17 00:10:13,2024-07-26 22:51:34,mobile_app
+139,Robert,Green,robert.green975@gmail.com,275-550-3787,7067 Valley Rd,Buffalo,NY,14976,1993-12-14,gold,8,694.86,online,2021-05-03 02:30:25,2024-08-11 14:21:05,ecommerce
+140,Kevin,Clark,kevin.clark420@icloud.com,767-939-9849,9834 Market St,Orlando,FL,32400,1957-04-23,bronze,5,259.43,catalog,2021-10-04 23:31:58,2024-11-10 16:32:34,mobile_app
+141,William,Peterson,william.peterson316@protonmail.com,607-682-9013,7620 Park Ave,Dallas,TX,75501,1960-07-12,gold,12,1081.83,mobile,2021-04-14 13:07:11,2025-12-23 23:09:34,ecommerce
+142,William,Hall,william.hall424@protonmail.com,803-432-1999,569 Church St,Carmel,IN,47845,2001-05-14,gold,23,2720.9,catalog,2021-04-03 02:29:39,2024-10-02 10:12:59,loyalty_program
+143,Daniel,Perez,daniel.perez828@yahoo.com,329-243-7936,9116 River Rd,Fort Lauderdale,FL,33338,1979-10-12,bronze,5,622.75,mobile,2024-06-02 14:45:33,2025-06-21 20:40:07,ecommerce
+144,Rachel,Bennett,rachel.bennett801@hotmail.com,315-624-3451,4328 River Rd,Cambridge,MA,02172,1997-06-09,bronze,5,587.48,online,2020-04-26 09:38:34,2024-11-11 18:02:08,mobile_app
+145,Stephanie,Jackson,stephanie.jackson40@hotmail.com,539-907-4892,3735 Maple Dr,Durham,NC,28529,1994-10-02,bronze,6,648.9,mobile,2022-09-23 21:40:32,2025-01-26 06:21:08,loyalty_program
+146,Nicole,Lopez,nicole.lopez453@yahoo.com,616-958-8937,9318 Main St,Orlando,FL,32792,1973-01-03,gold,12,936.7,mobile,2020-06-28 01:01:08,2025-01-10 18:50:08,ecommerce
+147,Ryan,Miller,ryan.miller722@yahoo.com,480-577-8605,2680 Park Ave,Atlanta,GA,30585,1957-06-18,silver,2,125.34,catalog,2023-04-16 00:25:32,2024-08-08 13:33:45,pos_instore
+148,Pamela,Ramirez,pamela.ramirez663@yahoo.com,893-411-5408,3667 Park Ave,Syracuse,NY,12503,1979-09-15,silver,10,1132.64,online,2023-08-09 17:19:30,2025-04-19 10:00:39,mobile_app
+149,Ryan,Allen,ryan.allen478@outlook.com,893-733-7506,5328 Park Ave,Tampa,FL,34690,1981-10-21,silver,4,352.46,mobile,2021-08-08 05:08:45,2024-10-25 10:53:04,customer_service
+150,Donald,Davis,donald.davis414@icloud.com,527-897-3292,5623 Highland Dr,Colorado Springs,CO,81406,2002-12-18,gold,18,1036.22,catalog,2024-01-18 01:23:15,2025-12-04 20:32:10,mobile_app
