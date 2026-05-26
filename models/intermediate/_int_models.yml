@@ -1,0 +1,145 @@
+version: 2
+
+models:
+  - name: int_identity_resolution
+    description: >
+      Unified identity records anchored on customers. Prospects are matched to
+      customers via email or name+address, and their marketing attributes
+      (lead source, lead score, household income) are enriched onto the
+      customer record. One row per customer, with optional prospect match.
+    columns:
+      - name: identity_id
+        description: Primary key. Surrogate key derived from customer_id.
+        tests:
+          - not_null
+      - name: customer_id
+        description: Source customer identifier.
+        tests:
+          - unique
+          - not_null
+      - name: prospect_id
+        description: Matched prospect identifier. Null if no prospect matched this customer.
+      - name: match_type
+        description: "How the prospect was matched: 'email' or 'name_address'. Null if unmatched."
+        tests:
+          - accepted_values:
+              arguments:
+                values: ['email', 'name_address']
+              config:
+                where: "match_type is not null"
+      - name: first_name
+        description: Customer first name from the customer record.
+      - name: last_name
+        description: Customer last name from the customer record.
+      - name: email
+        description: Customer email address (cleaned, lowercase).
+      - name: phone
+        description: Customer phone number (digits only).
+      - name: street_address
+        description: Customer street address.
+      - name: city
+        description: Customer city.
+      - name: state_code
+        description: Two-letter US state code.
+      - name: zip_code
+        description: Five-digit ZIP code.
+      - name: date_of_birth
+        description: Customer date of birth.
+      - name: loyalty_tier
+        description: Customer loyalty tier.
+      - name: lifetime_order_count
+        description: Total historical order count from customer record.
+      - name: lifetime_spend
+        description: Total historical spend in USD from customer record.
+      - name: preferred_channel
+        description: Customer preferred shopping channel.
+      - name: source_system
+        description: Originating system for the customer record.
+      - name: lead_source
+        description: Marketing channel from matched prospect. Null if no match.
+      - name: lead_score
+        description: Purchase likelihood score from matched prospect. Null if no match.
+      - name: estimated_household_income
+        description: Household income bracket from matched prospect. Null if no match.
+      - name: created_at
+        description: When the customer record was first created.
+      - name: updated_at
+        description: When the customer record was last updated.
+
+  - name: int_customer_events_aggregated
+    description: >
+      Event-level metrics aggregated per customer. Includes purchase totals,
+      funnel metrics, engagement counts, channel breakdown, and campaign reach.
+      One row per customer who has at least one event.
+    columns:
+      - name: customer_id
+        description: Primary key. Foreign key to stg_customers.
+        tests:
+          - unique
+          - not_null
+      - name: total_events
+        description: Total number of behavioral events for this customer.
+        tests:
+          - dbt_utils.accepted_range:
+              arguments:
+                min_value: 1
+      - name: distinct_event_types
+        description: Number of unique event types this customer has performed.
+      - name: distinct_channels
+        description: Number of unique channels this customer has used.
+      - name: first_event_at
+        description: Timestamp of the customer's first recorded event.
+      - name: last_event_at
+        description: Timestamp of the customer's most recent event.
+      - name: total_purchases
+        description: Number of purchase events.
+      - name: total_event_revenue
+        description: Sum of revenue from purchase events in USD.
+        tests:
+          - dbt_utils.accepted_range:
+              arguments:
+                min_value: 0
+      - name: product_views
+        description: Number of product view events.
+      - name: add_to_carts
+        description: Number of add-to-cart events.
+      - name: checkouts_started
+        description: Number of begin_checkout events.
+      - name: return_requests
+        description: Number of return request events.
+      - name: email_opens
+        description: Number of email open events.
+      - name: email_clicks
+        description: Number of email click events.
+      - name: wishlist_adds
+        description: Number of wishlist add events.
+      - name: web_events
+        description: Number of events from the web channel.
+      - name: mobile_events
+        description: Number of events from the mobile_app channel.
+      - name: in_store_events
+        description: Number of events from the in_store channel.
+      - name: most_frequent_product_category
+        description: The product category this customer interacted with most often.
+      - name: distinct_campaigns_touched
+        description: Number of unique marketing campaigns the customer engaged with.
+
+  - name: int_suppression_check
+    description: >
+      Deduplicated active suppression records, one per email. Used as a lookup
+      to filter suppressed contacts from audience outputs. Only includes
+      suppressions that have not expired.
+    columns:
+      - name: suppressed_email
+        description: Primary key. The suppressed email address.
+        tests:
+          - unique
+          - not_null
+      - name: suppressed_phone
+        description: Phone number associated with the suppression. Null if email-only.
+      - name: suppression_reason
+        description: Reason for the most recent active suppression.
+      - name: suppressed_at
+        description: When the suppression was created.
+      - name: suppression_expires_at
+        description: When the suppression expires. Null if permanent.

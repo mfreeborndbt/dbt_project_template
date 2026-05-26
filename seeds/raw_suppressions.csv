@@ -1,0 +1,61 @@
+suppression_id,email,phone,reason,suppressed_at,expires_at
+1,ANTHONY.BAKER704@ICLOUD.COM,,email_opt_out,2024-12-31 09:39:36,2027-01-30 04:28:26
+2,ryan.hall283@yahoo.com,,sms_opt_out,2025-04-28 02:07:25,2027-07-27 08:02:30
+3,helen.bennett736@gmail.com,,spam_complaint,2024-11-26 05:30:54,2027-06-03 00:20:02
+4,stephanie.bell707@gmail.com,,hard_bounce,2025-01-07 16:23:55,
+5,rachel.taylor150@icloud.com,,spam_complaint,2024-12-13 05:01:47,
+6,karen.martinez975@protonmail.com,,sms_opt_out,2023-10-22 07:16:39,2027-11-22 03:00:49
+7,cynthia.robinson645@yahoo.com,,inactive_12mo,2025-08-26 12:13:51,
+8,joseph.gomez990@hotmail.com,,fraud_flag,2025-03-19 18:19:24,
+9,shirley.walker504@gmail.com,591-899-7990,duplicate_record,2024-02-08 23:13:07,2026-04-09 17:45:45
+10,dorothy.lewis636@outlook.com,,sms_opt_out,2024-04-26 07:53:18,
+11,ELIZABETH.ROBINSON807@PROTONMAIL.COM,,inactive_12mo,2023-12-02 11:55:10,
+12,kathleen.sanchez329@outlook.com,,customer_request,2023-08-02 13:49:37,
+13,pamela.cook510@icloud.com,,customer_request,2024-08-30 16:25:01,
+14,sarah.king783@hotmail.com,785-581-2956,duplicate_record,2023-08-15 13:50:32,
+15,margaret.bell136@outlook.com,,email_opt_out,2023-12-08 00:42:53,
+16,betty.rogers269@icloud.com,,customer_request,2025-10-26 21:12:35,
+17,rebecca.sanchez256@icloud.com,,hard_bounce,2024-01-02 04:29:06,
+18,barbara.cooper695@icloud.com,,hard_bounce,2024-10-18 04:56:31,2027-05-01 06:33:53
+19,sharon.lopez624@gmail.com,,duplicate_record,2024-11-08 14:45:25,
+20,nicholas.nguyen836@icloud.com,,sms_opt_out,2024-02-13 06:33:59,
+21,DAVID.SCOTT657@AOL.COM,,sms_opt_out,2025-10-16 22:11:05,2027-04-26 13:28:46
+22,barbara.howard386@hotmail.com,,spam_complaint,2025-06-09 04:26:25,
+23,jeffrey.flores11@gmail.com,,customer_request,2024-04-15 16:57:59,2027-07-03 01:40:02
+24,michelle.walker247@aol.com,,inactive_12mo,2025-02-14 04:06:36,
+25,patricia.hernandez972@icloud.com,403-277-4978,hard_bounce,2025-03-06 13:57:04,2027-02-15 00:48:07
+26,karenmartinez1@outlook.com,,hard_bounce,2024-08-17 06:41:00,2026-07-18 11:52:53
+27,nancy.mitchell524@hotmail.com,4354168790,duplicate_record,2024-02-18 19:53:58,2026-09-10 15:51:29
+28,michelle.morgan39@gmail.com,,sms_opt_out,2024-10-10 04:00:38,2027-11-25 14:55:55
+29,joseph.morgan664@protonmail.com,,sms_opt_out,2023-08-20 14:09:23,2027-08-08 04:47:20
+30,melissa.walker84@outlook.com,430-265-6539,duplicate_record,2023-11-26 18:32:40,2026-09-05 06:13:17
+31,alexander.campbell940@aol.com,,duplicate_record,2024-05-29 02:28:32,
+32,rachel.gonzalez693@icloud.com,,sms_opt_out,2024-06-17 15:19:46,
+33,donna.wood758@aol.com,,duplicate_record,2025-04-23 19:25:25,2027-05-09 20:09:08
+34,nancyramirez85@outlook.com,,inactive_12mo,2025-09-17 13:03:15,
+35,brenda.hall367@icloud.com,894-973-3240,fraud_flag,2023-08-04 22:07:18,2026-12-27 21:44:31
+36,jonathan.diaz13@gmail.com,742-939-5501,email_opt_out,2023-09-02 11:29:15,
+37,jeffrey.kelly124@yahoo.com,786-600-1530,inactive_12mo,2024-04-26 12:02:56,
+38,larry.brown659@hotmail.com,,sms_opt_out,2024-09-10 00:36:36,2027-06-27 11:39:57
+39,marksanchez3@protonmail.com,,customer_request,2025-04-02 00:43:36,2027-01-28 02:31:53
+40,barbara.torres486@yahoo.com,751-477-5450,inactive_12mo,2024-07-11 00:13:36,
+41,donna.hernandez888@gmail.com,,inactive_12mo,2024-04-23 04:37:40,
+42,amanda.scott221@protonmail.com,,hard_bounce,2023-06-04 04:20:12,
+43,anthony.evans573@aol.com,,duplicate_record,2025-10-11 09:22:38,
+44,ashley.rivera979@icloud.com,,sms_opt_out,2025-09-14 18:18:09,2027-10-09 07:10:02
+45,emma.stewart583@aol.com,,inactive_12mo,2025-01-05 16:19:51,
+46,pamela.scott228@protonmail.com,936-469-9201,email_opt_out,2023-12-11 19:32:02,
+47,sarah.nelson499@aol.com,,customer_request,2024-12-07 20:32:04,2027-09-27 00:34:38
+48,samantha.stewart39@aol.com,883-515-1744,spam_complaint,2024-05-29 21:46:08,
+49,joseph.evans322@gmail.com,,email_opt_out,2024-03-31 14:38:43,
+50,robert.campbell839@hotmail.com,,fraud_flag,2024-02-20 19:50:48,
+51,helencarter14@outlook.com,616-958-8937,hard_bounce,2023-09-10 12:49:14,
+52,rachel.bennett801@hotmail.com,,spam_complaint,2025-08-21 13:50:03,
+53,donna.hill729@icloud.com,,customer_request,2025-10-18 02:38:13,
+54,anna.peterson604@icloud.com,756-219-7266,email_opt_out,2024-10-14 18:17:07,
+55,rebecca.green846@gmail.com,917-853-3852,fraud_flag,2025-07-09 20:21:52,2027-08-13 13:11:25
+56,matthew.kelly638@protonmail.com,,duplicate_record,2025-09-05 01:41:38,
+57,alexander.morris533@protonmail.com,,email_opt_out,2024-05-16 12:01:17,
+58,raymond.perez900@icloud.com,701-740-6134,spam_complaint,2024-02-11 12:19:03,2026-02-18 19:29:57
+59,elizabeth.nguyen595@hotmail.com,335-596-7895,email_opt_out,2025-12-07 11:08:53,
+60,barbara.young347@protonmail.com,,spam_complaint,2024-11-11 10:01:05,

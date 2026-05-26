@@ -1,0 +1,185 @@
+version: 2
+
+models:
+  - name: stg_customers
+    description: >
+      Cleaned customer records with standardized email (lowercase, trimmed),
+      normalized phone (digits only), and trimmed name fields. One row per customer.
+    columns:
+      - name: customer_id
+        description: Primary key. Unique identifier for each customer.
+        tests:
+          - unique
+          - not_null
+      - name: first_name
+        description: Customer first name, trimmed of whitespace.
+      - name: last_name
+        description: Customer last name, trimmed of whitespace.
+      - name: email
+        description: Lowercase, trimmed email address. May be null for ~3% of records.
+      - name: phone
+        description: Phone number with non-digit characters removed (10-digit string).
+      - name: street_address
+        description: Street address, trimmed.
+      - name: city
+        description: City name, trimmed.
+      - name: state_code
+        description: Two-letter US state code, uppercased.
+      - name: zip_code
+        description: Five-digit ZIP code as a string, trimmed.
+      - name: date_of_birth
+        description: Customer date of birth.
+      - name: loyalty_tier
+        description: "Customer loyalty tier: bronze, silver, gold, or platinum."
+        tests:
+          - accepted_values:
+              arguments:
+                values: ['bronze', 'silver', 'gold', 'platinum']
+      - name: lifetime_order_count
+        description: Total historical order count.
+      - name: lifetime_spend
+        description: Total historical spend in USD.
+        tests:
+          - dbt_utils.accepted_range:
+              arguments:
+                min_value: 0
+      - name: preferred_channel
+        description: "Customer's preferred shopping channel: online, in_store, mobile, or catalog."
+      - name: created_at
+        description: When the customer record was first created.
+      - name: updated_at
+        description: When the customer record was last updated.
+      - name: source_system
+        description: "Originating system: ecommerce, pos_instore, mobile_app, loyalty_program, or customer_service."
+
+  - name: stg_prospects
+    description: >
+      Cleaned prospect records from marketing acquisition channels. Standardized
+      email and phone formats. Some prospects share name and address with existing
+      customers for identity resolution.
+    columns:
+      - name: prospect_id
+        description: Primary key. Unique identifier for each prospect.
+        tests:
+          - unique
+          - not_null
+      - name: first_name
+        description: Prospect first name, trimmed.
+      - name: last_name
+        description: Prospect last name, trimmed.
+      - name: email
+        description: Lowercase, trimmed email address.
+        tests:
+          - not_null
+      - name: phone
+        description: Phone number with non-digit characters removed.
+      - name: street_address
+        description: Prospect street address, trimmed.
+      - name: city
+        description: Prospect city name, trimmed.
+      - name: state_code
+        description: Two-letter US state code, uppercased.
+      - name: zip_code
+        description: Five-digit ZIP code as a string, trimmed.
+      - name: lead_source
+        description: Marketing channel that generated this prospect, lowercased.
+      - name: lead_score
+        description: Purchase likelihood score from 1 to 100.
+        tests:
+          - dbt_utils.accepted_range:
+              arguments:
+                min_value: 1
+                max_value: 100
+      - name: estimated_household_income
+        description: "Income bracket estimate: 25k-50k, 50k-75k, 75k-100k, 100k-150k, or 150k+."
+      - name: created_at
+        description: When the prospect record was created.
+
+  - name: stg_events
+    description: >
+      Cleaned behavioral events from retail touchpoints. Standardized event types
+      and channels to lowercase. Empty campaign and product category values
+      converted to null.
+    columns:
+      - name: event_id
+        description: Primary key. Unique identifier for each event.
+        tests:
+          - unique
+          - not_null
+      - name: customer_id
+        description: Foreign key to stg_customers.
+        tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('stg_customers')
+                field: customer_id
+      - name: event_type
+        description: "Type of behavioral event: page_view, product_view, add_to_cart, purchase, etc."
+        tests:
+          - accepted_values:
+              arguments:
+                values: ['page_view', 'product_view', 'add_to_cart', 'remove_from_cart', 'begin_checkout', 'purchase', 'return_request', 'wishlist_add', 'search', 'email_open', 'email_click', 'loyalty_redeem', 'store_visit', 'app_open', 'review_submit']
+      - name: event_timestamp
+        description: When the event occurred.
+        tests:
+          - not_null
+      - name: channel
+        description: "Channel where event occurred: web, mobile_app, in_store, email, or sms."
+      - name: campaign_id
+        description: Marketing campaign identifier. Null if not campaign-associated.
+      - name: product_category
+        description: Product category involved. Null for non-product events.
+      - name: event_revenue
+        description: Revenue in USD. Only populated for purchase events.
+
+  - name: stg_suppressions
+    description: >
+      Cleaned marketing suppression records. Includes a computed is_active flag
+      based on whether the suppression has expired.
+    columns:
+      - name: suppression_id
+        description: Primary key. Unique identifier for each suppression record.
+        tests:
+          - unique
+          - not_null
+      - name: email
+        description: Suppressed email address, lowercase and trimmed.
+        tests:
+          - not_null
+      - name: phone
+        description: Suppressed phone number, digits only. Null if email-only suppression.
+      - name: reason
+        description: Reason for suppression.
+        tests:
+          - accepted_values:
+              arguments:
+                values: ['email_opt_out', 'sms_opt_out', 'hard_bounce', 'spam_complaint', 'customer_request', 'inactive_12mo', 'duplicate_record', 'fraud_flag']
+      - name: suppressed_at
+        description: When the suppression was created.
+      - name: expires_at
+        description: When the suppression expires. Null if permanent.
+      - name: is_active
+        description: Whether this suppression is currently active (true if no expiry or expiry is in the future).
+        tests:
+          - not_null
+
+  - name: stg_reference_states
+    description: >
+      US state reference data with standardized codes and region classification.
+    columns:
+      - name: state_code
+        description: Primary key. Two-letter USPS state abbreviation, uppercased.
+        tests:
+          - unique
+          - not_null
+      - name: state_name
+        description: Full state name, trimmed.
+        tests:
+          - not_null
+      - name: region
+        description: "US census region: south, west, northeast, or midwest."
+        tests:
+          - accepted_values:
+              arguments:
+                values: ['south', 'west', 'northeast', 'midwest']

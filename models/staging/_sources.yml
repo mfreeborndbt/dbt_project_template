@@ -1,0 +1,176 @@
+version: 2
+
+sources:
+  - name: raw
+    database: client_1_database
+    schema: raw
+    description: Raw source tables loaded from the client's retail data systems.
+    config:
+      freshness:
+        warn_after: {count: 330, period: day}
+        error_after: {count: 365, period: day}
+    tables:
+      - name: raw_customers
+        description: >
+          Raw customer records from multiple retail source systems including
+          ecommerce, POS, mobile app, loyalty program, and customer service.
+          Contains PII, loyalty tier info, and lifetime purchase metrics.
+          Data quality varies — expect whitespace, case inconsistencies, and
+          missing emails.
+        config:
+          loaded_at_field: updated_at
+        columns:
+          - name: customer_id
+            description: Unique identifier for each customer record.
+            tests:
+              - unique
+              - not_null
+          - name: first_name
+            description: Customer first name as entered in the source system. May contain leading/trailing whitespace.
+          - name: last_name
+            description: Customer last name as entered in the source system.
+          - name: email
+            description: Customer email address. May contain leading/trailing whitespace and inconsistent casing. Null for ~3% of records.
+          - name: phone
+            description: Customer phone number. Format varies — some include dashes, others are digits only.
+          - name: street_address
+            description: Street address line from the source system.
+          - name: city
+            description: City name from the source system.
+          - name: state_code
+            description: Two-letter US state abbreviation.
+          - name: zip_code
+            description: Five-digit US ZIP code as a string.
+          - name: date_of_birth
+            description: Customer date of birth.
+          - name: loyalty_tier
+            description: "Current loyalty program tier: bronze, silver, gold, or platinum."
+            tests:
+              - accepted_values:
+                  arguments:
+                    values: ['bronze', 'silver', 'gold', 'platinum']
+          - name: lifetime_order_count
+            description: Total number of orders placed by this customer across all channels.
+          - name: lifetime_spend
+            description: Total historical spend in USD across all orders.
+          - name: preferred_channel
+            description: "Customer's preferred shopping channel: online, in_store, mobile, or catalog."
+          - name: created_at
+            description: Timestamp when the customer record was first created.
+          - name: updated_at
+            description: Timestamp when the customer record was last updated.
+          - name: source_system
+            description: "The originating system for this record: ecommerce, pos_instore, mobile_app, loyalty_program, or customer_service."
+
+      - name: raw_prospects
+        description: >
+          Prospect records from marketing acquisition channels. Some prospects
+          may overlap with existing customers (shared name and address with
+          different email) to support identity resolution testing.
+        config:
+          loaded_at_field: created_at
+        columns:
+          - name: prospect_id
+            description: Unique identifier for each prospect record.
+            tests:
+              - unique
+              - not_null
+          - name: first_name
+            description: Prospect first name. May be lowercased in ~6% of records.
+          - name: last_name
+            description: Prospect last name.
+          - name: email
+            description: Prospect email address. May be uppercased in ~12% of records.
+          - name: phone
+            description: Prospect phone number.
+          - name: street_address
+            description: Street address for the prospect.
+          - name: city
+            description: City name for the prospect.
+          - name: state_code
+            description: Two-letter US state abbreviation.
+          - name: zip_code
+            description: Five-digit US ZIP code as a string.
+          - name: lead_source
+            description: Marketing channel that generated this prospect (e.g. abandoned_cart_email, google_shopping, facebook_ads).
+          - name: lead_score
+            description: Numeric score from 1-100 indicating purchase likelihood.
+          - name: estimated_household_income
+            description: "Income bracket estimate: 25k-50k, 50k-75k, 75k-100k, 100k-150k, or 150k+."
+          - name: created_at
+            description: Timestamp when the prospect record was created.
+
+      - name: raw_events
+        description: >
+          Behavioral event stream from retail touchpoints. Covers browsing,
+          shopping, purchasing, and engagement activities across web, mobile,
+          in-store, email, and SMS channels.
+        config:
+          loaded_at_field: event_timestamp
+        columns:
+          - name: event_id
+            description: Unique identifier for each event.
+            tests:
+              - unique
+              - not_null
+          - name: customer_id
+            description: Foreign key to raw_customers.
+            tests:
+              - not_null
+              - relationships:
+                  arguments:
+                    to: source('raw', 'raw_customers')
+                    field: customer_id
+          - name: event_type
+            description: "Type of event: page_view, product_view, add_to_cart, purchase, return_request, etc."
+          - name: event_timestamp
+            description: Timestamp when the event occurred.
+          - name: channel
+            description: "Channel where the event occurred: web, mobile_app, in_store, email, or sms."
+          - name: campaign_id
+            description: Marketing campaign identifier. Empty string if not associated with a campaign.
+          - name: event_revenue
+            description: Revenue generated by this event in USD. Only populated for purchase events.
+          - name: product_category
+            description: Product category involved in the event. Only populated for product-related events.
+
+      - name: raw_suppressions
+        description: >
+          Marketing suppression list containing email and phone records that
+          must be excluded from outbound communications. Includes opt-outs,
+          bounces, complaints, and fraud flags.
+        config:
+          loaded_at_field: suppressed_at
+        columns:
+          - name: suppression_id
+            description: Unique identifier for each suppression record.
+            tests:
+              - unique
+              - not_null
+          - name: email
+            description: The suppressed email address.
+          - name: phone
+            description: The suppressed phone number. Empty if suppression is email-only.
+          - name: reason
+            description: "Reason for suppression: email_opt_out, sms_opt_out, hard_bounce, spam_complaint, customer_request, inactive_12mo, duplicate_record, or fraud_flag."
+            tests:
+              - accepted_values:
+                  arguments:
+                    values: ['email_opt_out', 'sms_opt_out', 'hard_bounce', 'spam_complaint', 'customer_request', 'inactive_12mo', 'duplicate_record', 'fraud_flag']
+          - name: suppressed_at
+            description: Timestamp when the suppression was created.
+          - name: expires_at
+            description: Timestamp when the suppression expires. Null if permanent.
+
+      - name: raw_reference_states
+        description: US state reference table with state codes, full names, and census region classification.
+        columns:
+          - name: state_code
+            description: Two-letter USPS state abbreviation.
+            tests:
+              - unique
+              - not_null
+          - name: state_name
+            description: Full state name (e.g. California, Texas).
+          - name: region
+            description: "US census region: South, West, Northeast, or Midwest."

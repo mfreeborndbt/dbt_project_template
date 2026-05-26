@@ -1,4 +1,10 @@
 node_modules/
 dist/
 .env
+.env.*
+app/.env
+app/.env.*
 logs/
+dbt_internal_packages/
+dbt_packages/
+target/
